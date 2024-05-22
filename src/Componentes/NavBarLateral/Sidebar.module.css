@@ -1,0 +1,119 @@
+/* Sidebar.css */
+.sidebar {
+  width: 0;
+  height: 95.2%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  transition: 0.5s;
+  position: fixed;
+  overflow-x: hidden;
+  background-color: #f3b44c;
+}
+
+.sidebar Link {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+  transition: 0.10s;
+  
+}
+
+.sidebar Link:hover {
+  color: white;
+  transition: 0.10s;
+}
+
+.sidebar.open {
+  width: 17%;
+
+}
+
+.hamburger {
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: right;
+
+}
+
+.hamburger img {
+  width: 50px;
+  height: 40px;
+}
+
+.ul_sidebar {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin: 5px 3rem;
+}
+
+.ul_sidebar li {
+  color: white;
+}
+
+.texto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff1c;
+  height: 50px;
+  width: 150px;
+  transition: all .3s ease-in-out;
+  color: #000;
+}
+
+.texto img {
+  width: 30px;
+  padding-left: 5px;
+}
+
+.texto:hover {
+  background-color: #ffffff46;
+}
+
+.usuario {
+  width: 100%;
+  height: 20%;
+  padding: 0 auto;
+  color: #fff;
+  padding: 0 0 0 0;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.usuario img {
+  width: 25%;
+}
+
+/* Layout.css */
+.layout {
+  display: flex;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

@@ -1,0 +1,11 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.erro{
+    padding-top: 20%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
