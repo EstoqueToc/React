@@ -17,7 +17,7 @@ function Router() {
         {"Navegação da pagina Home"}
 				<Route path={"/"} element={<Home />} />             
 				<Route path={"/login"} element={<Login />} />             
-				<Route path={"/DashBoardGeral"} element={<Login />} />    
+				<Route path={"/DashBoardGeral"} element={<Dashboard />} />    
 
         {"Navegação de tela após realizar o cadastro"}
 	
