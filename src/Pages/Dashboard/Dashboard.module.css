@@ -1,0 +1,130 @@
+/* styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.content h2 {
+    margin: 20px 0 30px;
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -240px; 
+    width: 280px;
+    height: 100%;
+    background-color: #F3B44C;
+    color: #fff;
+    padding: 20px;
+    transition: 0.3s;
+    z-index: 900;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.075);
+}
+
+.usuario {
+    color: #fff;
+    text-align: center;
+    padding: 80px 0 0;
+}
+
+.usuario img {
+    width: 85px;
+}
+
+.ver-menu {
+    left: 0;
+}
+
+.menu-lateral ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-lateral li {
+    margin: 10px 0;
+}
+
+.menu-lateral a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+.ver-menu {
+    left: 0;
+}
+
+.dashboard {
+    display: flex;
+    height: 100%;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 21px;
+}
+
+.card {
+    flex: 1;
+    background: #FFFFFF;
+    padding: 20px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    border: 2px solid #ddd;
+}
+
+.sec {
+    display: flex;
+    justify-content: right;
+    margin-left: 70px;
+}
+
+.main-content {
+    width: 100%;
+    padding: 20px;
+    background: #FFFFFF;
+    transition: 0.5s;
+}
+
+.card:last-child {
+    margin-right: 0;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1em;
+}
+
+.card p {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.positive {
+    color: #4CAF50;
+}
+
+.negative {
+    color: #F44336;
+}
+
+.chart {
+    background: #FFFFFF;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+}
+
+#revenueChart {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 550px;
+}
+
+.chart h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
