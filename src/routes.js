@@ -6,8 +6,9 @@ import Login from "./Pages/LoginCadastro/LoginCadastro";
 import NotFound from './Pages/404';
 import Usuario from './Pages/Usuario/Usuario';
 import Produtos from './Pages/Produtos/Produtos';
+import CadastroFunc from './Pages/CadastroFunc/CadastroFunc'
 
-import Sidebar from './Componentes/NavBarLateral/SideBarPrincipal';
+import Sidebar from './Componentes/NavBarLateral/NavBarLateral';
 function Router() {
   return (
 
@@ -28,6 +29,9 @@ function Router() {
         <Route path={"/pagina-geral"} element={<Sidebar />}/>
         <Route path={"/usuarios"} element={<Usuario />}/>
         <Route path={"/Produtos"} element={<Produtos />}/>
+        <Route path={"/CadastroFunc"} element={<CadastroFunc />}/>
+
+
         
 
         {"Pagina de Not Found, para caso o cliente acesse alguma URL errada"}            

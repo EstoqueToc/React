@@ -115,27 +115,26 @@ const LoginCadastro = () => {
             <div className="container" id="container">
                 <div className="form-container cadastrar-se">
                     <form>
-                        <h1>Criar conta</h1>
-                        <div className="social-icons">
-                            <a href="./" className="icon">
-                                <AiOutlineGooglePlus />
-                            </a>
-                            <a href="./" className="icon">
-                                <CgFacebook />
-                            </a>
-                            <a href="./" className="icon">
-                                <BiLogoLinkedin />
-                            </a>
-                        </div>
+                        
                         <div className="formulario">
-                            <span>ou utilize seu email para se registrar</span>
-                            <input type="text" value={nomeEmpresa} placeholder="Nome Empresa"
+                           
+                            <input type="text" value={nomeEmpresa} placeholder="Nome Fantasia"
                                 onChange={(e) => handleInputChange(e, setNomeEmpresa)} />
                             <input type="text" value={CNPJ} placeholder="CNPJ"
                                 onChange={(e) => handleInputChange(e, setCNPJ)} />
                             <input type="email" value={emailCorporativo} placeholder="E-mail Corporativo"
                                 onChange={(e) => handleInputChange(e, setEmailCorporativo)} />
-                            <input type="text" value={razaoSocial} placeholder="Razão Social"
+                            <input type="text" value={razaoSocial} placeholder="Nome Representante"
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
+                            <input type="text" value={razaoSocial} placeholder="CEP"
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
+                            <input type="text" value={razaoSocial} placeholder="Rua"
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
+                            <input type="text" value={razaoSocial} placeholder="Bairro"
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
+                            <input type="text" value={razaoSocial} placeholder="Cidade"
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
+                            <input type="text" value={razaoSocial} placeholder="Estado"
                                 onChange={(e) => handleInputChange(e, setRazaoSocial)} />
                             <input type="password" value={senhaEmpresa} placeholder="Senha"
                                 onChange={(e) => handleInputChange(e, setSenhaEmpresa)} />
@@ -157,19 +156,7 @@ const LoginCadastro = () => {
                 <div className="form-container entrar">
                     <form>
                         <h1>Entrar</h1>
-                        <div className="social-icons">
-                            <a href="./" className="icon">
-                                <AiOutlineGooglePlus />
-                            </a>
-                            <a href="./" className="icon">
-                                <CgFacebook />
-                            </a>
-                            <a href="./" className="icon">
-                                <BiLogoLinkedin />
-                            </a>
-                        </div>
-
-                        <span>ou utilize seu email e senha</span>
+                       
 
                         <input
                             type="email"

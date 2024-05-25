@@ -7,7 +7,7 @@ import IconPark from '../../Assets/icon-park-outline--add.svg';
 import OioArrow from '../../Assets/oui--arrow-up.svg';
 import Tabler from '../../Assets/tabler--file-export (1).svg';
 
-import SideBar from '../../Componentes/NavBarLateral/SideBarPrincipal'
+import SideBar from '../../Componentes/NavBarLateral/NavBarLateral'
 import FiltroPrincipal from '../../Componentes/NavBarLateral copy/FiltroPrincipal';
 
 
@@ -70,10 +70,10 @@ function Produtos() {
     <>
 
 
+      <SideBar />
       <div className={styles['header']}>
         <div className={styles.navColection}>
 
-          <SideBar />
           <Link to='/CadastroUsuarios' className={styles.logo}>
             Usuários
             <img src={adicionarUsuarioImg} alt="adicionar novo usuario" />
@@ -87,7 +87,9 @@ function Produtos() {
         <div className={styles['container-usuarios']}>
           <h1>Todos seus produtos</h1>
           <FiltroPrincipal />
+
           <br />
+
           <div id='quadrado' className={styles.quadrado}>
             <div className={styles.cabecalho} id='cabecalho'>
               <img
@@ -95,35 +97,45 @@ function Produtos() {
                 alt=''
                 className={styles.rotate}
               />
-
             </div>
-
           </div>
+
           <br />
           <br />
 
           <h4>Filtros de Status do seu Estoque</h4>
+
           <div className={styles.filtroStatus}>
             <div>
               <input type='radio' name='prioridade' /> Alto
             </div>
+
             <div>
               <input type='radio' name='prioridade' /> Médio
             </div>
+
             <div>
               <input type='radio' name='prioridade' /> Baixo
             </div>
+
           </div>
 
           <table className={styles['tabela-usuario']}>
             <thead>
               <tr>
+                
                 <th>ID</th>
+
                 <th>Produto</th>
+
                 <th>Quantidade</th>
+
                 <th>Preço Unitário</th>
+
                 <th>Status Estoque</th>
+
                 <th>Editar</th>
+
               </tr>
             </thead>
             <tbody id='products-table'>
