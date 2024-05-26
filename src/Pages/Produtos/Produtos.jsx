@@ -70,12 +70,12 @@ function Produtos() {
     <>
 
 
-      <SideBar />
+      <SideBar  BreadCrumb='Produtos'/>
       <div className={styles['header']}>
         <div className={styles.navColection}>
 
-          <Link to='/CadastroUsuarios' className={styles.logo}>
-            Usuários
+          <Link to='/CadastroProduto' className={styles.logo}>
+            Produto
             <img src={adicionarUsuarioImg} alt="adicionar novo usuario" />
           </Link>
           <div className={styles['header-right']}>

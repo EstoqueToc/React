@@ -33,7 +33,7 @@ function Home() {
                 <div className={styles["container"]}>
                     <h1>Software de gerenciamento de estoque.</h1>
                     <p>Seja bem-vindo à EstoqueToc. Acompanhe seu estoque com nosso poderoso software de gerenciamento e controle de estoque.</p>
-                    <a href="/" className="btnSaibaMais">Saiba Mais</a>
+                    
                 </div>
             </section>
             <section className={styles["metas-section"]}>

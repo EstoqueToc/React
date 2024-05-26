@@ -4,9 +4,9 @@ import userImage from '../../Assets/usuario.png'
 import styles from './teste.module.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUser, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faChartLine, faFile, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser,faUsers, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faChartLine, faFile, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Menu = () => {
+const Menu = ({BreadCrumb}) => {
     const [submenuFuncionario, setSubmenuFuncionario] = useState(false);
     const [submenuEstoque, setSubmenuEstoque] = useState(false);
     const [submenuRelatorios, setSubmenuRelatorios] = useState(false);
@@ -35,8 +35,7 @@ const Menu = () => {
                 <section className={styles['breadcrumbSuperior']}>
                     <ul className={styles['breadcrumb']}>
                         <li><a href="./inicial.html">Home</a></li>
-                        <li><a href="#">Relatórios</a></li>
-                        <li><a href="#" className={styles['localAtual']}>Gerar Relatório</a></li>
+                        <li><a href="#" className={styles['localAtual']}>{BreadCrumb}</a></li>
                     </ul>
                 </section>
             </div>
@@ -50,7 +49,7 @@ const Menu = () => {
                         <li className={styles['item-menu']}>
                             <a href="./inicial.html">
                                 <FontAwesomeIcon icon={faHome} size="lg" />
-                                <span className={styles['nav-text']}>Página Inicial</span>
+                                <Link to={"/DashBoard"} className={styles['nav-text']}>Página Inicial</Link>
                             </a>
                         </li>
                         <li  className={styles['item-menu']}>
@@ -61,8 +60,14 @@ const Menu = () => {
                             <ul id="submenu-funcionario" style={{ display: submenuFuncionario ? 'block' : 'none' }}>
                                 <li>
                                     <a href="cadastroUsuario.html">
+                                        <FontAwesomeIcon icon={faUsers} size="sm" id="iconeCadastrar" />
+                                        <Link to={"/usuarios"} className={styles['nav-text']}> Funcionarios</Link>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="cadastroUsuario.html">
                                         <FontAwesomeIcon icon={faUserPlus} size="sm" id="iconeCadastrar" />
-                                        <Link to={"/"} className={styles['nav-text']}>Cadastrar Funcionario</Link>
+                                        <Link to={"/CadastroFunc"} className={styles['nav-text']}>Cadastrar Funcionario</Link>
                                     </a>
                                 </li>
                             </ul>
@@ -73,46 +78,30 @@ const Menu = () => {
                                 <span className={styles['nav-text']}>Estoque <FontAwesomeIcon icon={faAngleDown} /></span>
                             </a>
                             <ul id="submenu-estoque" style={{ display: submenuEstoque ? 'block' : 'none' }}>
+
                                 <li>
-                                    <a href="cadastroProdutos.html">
+                                    <a href="estoque.html">
                                         <FontAwesomeIcon icon={faCube} size="sm" />
-                                        <Link to={"/"} className={styles['nav-text']}>Cadastrar Produto</Link>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="cadastroFornecedor.html">
-                                        <FontAwesomeIcon icon={faTruck} size="sm" />
-                                        <Link to={"/"} className={styles['nav-text']}>Cadastrar Fornecedor</Link>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="dashboard.html">
-                                        <FontAwesomeIcon icon={faChartLine} size="sm" />
-                                        <span className={styles['nav-text']}>Análise do Estoque</span>
+                                        <Link to={"/Produtos"} className={styles['nav-text']}>Meu Estoque</Link>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="estoque.html">
                                         <FontAwesomeIcon icon={faCube} size="sm" />
-                                        <span className={styles['nav-text']}>Meu Estoque</span>
+                                        <Link to={"/CadastroProduto"} className={styles['nav-text']}>Meu Estoque</Link>
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li  className={styles['item-menu']}>
-                            <a href="#" onClick={() => toggleSubmenu('relatorios')}>
-                                <FontAwesomeIcon icon={faFile} size="lg" />
-                                <span className={styles['nav-text']}>Relatórios <FontAwesomeIcon icon={faAngleDown} /></span>
-                            </a>
-                            <ul id="submenu-relatorios" style={{ display: submenuRelatorios ? 'block' : 'none' }}>
+                               
                                 <li>
-                                    <a href="relatorios.html">
-                                        <FontAwesomeIcon icon={faFile} size="lg" />
-                                        <Link to={"/"} className={styles['nav-text']}>Gerar Relatorio</Link>
+                                    <a href="cadastroFornecedor.html">
+                                        <FontAwesomeIcon icon={faTruck} size="sm" />
+                                        <Link to={"/CadastroFornecedor"} className={styles['nav-text']}>Cadastrar Fornecedor</Link>
                                     </a>
                                 </li>
+                                
                             </ul>
                         </li>
+                    
                         <li  className={styles['item-menu']}>
                             <a href="#">
                                 <FontAwesomeIcon icon={faEnvelope} size="lg" />

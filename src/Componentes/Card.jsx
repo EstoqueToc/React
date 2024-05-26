@@ -1,3 +1,5 @@
+/*
+
 import React from 'react';
 
 function Card({ title, amount, change, changeType }) {
@@ -11,3 +13,4 @@ function Card({ title, amount, change, changeType }) {
 }
 
 export default Card;
+*/

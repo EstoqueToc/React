@@ -1,3 +1,4 @@
+/*
 import React, { useEffect } from 'react';
 import { Chart as ChartJS } from 'chart.js';
 
@@ -37,3 +38,4 @@ function Chart() {
 }
 
 export default Chart;
+*/

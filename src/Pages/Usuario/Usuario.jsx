@@ -10,20 +10,28 @@ function Usuario() {
     return (
         <>
 
-            <SideBar />
+            <SideBar BreadCrumb='Usuarios'/>
+
             <div className={styles.sec}>
+
                 <div className={styles.header}>
-                    <Link to='/CadastroUsuarios' className={styles.logo}>
+
+                    <Link to='/VadastroFunc' className={styles.logo}>
                         Usuários
                         <img src={adicionarUsuarioImg} alt="adicionar novo usuario" />
                     </Link>
+
                     <div className={styles["header-right"]}>
                         <input type="search" />
                         <button >Pesquisar</button>
                     </div>
+
                 </div>
+
                 <div className={styles["container-usuarios"]}>
+
                     <table className={styles["tabela-usuario"]}>
+
                         <thead>
                             <tr>
                                 <th>Nome de Usuário</th>
@@ -32,6 +40,7 @@ function Usuario() {
                                 <th>Status</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr>
                                 <td>Raquel Guimarães</td>
@@ -46,13 +55,16 @@ function Usuario() {
                                 <td>Ativo</td>
                             </tr>
                         </tbody>
+
                     </table>
+
                 </div>
+
                 <footer className={styles.footer}>
                     <p>&copy;EstoqueToc.</p>
                 </footer>
-            </div>
 
+            </div>
         </>
     );
 }
