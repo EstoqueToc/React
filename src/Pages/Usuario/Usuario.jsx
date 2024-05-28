@@ -16,7 +16,7 @@ function Usuario() {
 
                 <div className={styles.header}>
 
-                    <Link to='/VadastroFunc' className={styles.logo}>
+                    <Link to='/CadastroFunc' className={styles.logo}>
                         Usuários
                         <img src={adicionarUsuarioImg} alt="adicionar novo usuario" />
                     </Link>
