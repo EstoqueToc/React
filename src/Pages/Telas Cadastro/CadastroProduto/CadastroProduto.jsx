@@ -5,10 +5,14 @@ import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
 function CadastroProduto() {
     const [formData, setFormData] = useState({
         nome: '',
+        precoDeVenda: '',
+        precoDeCompra: '',
+        dataDeEntrada: '',
+        unidadeDeMedida: '',
         descricao: '',
-        preco: '',
         categoria: '',
-        estoque: ''
+        preco: '',
+        fornecedor: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -27,6 +31,22 @@ function CadastroProduto() {
         setError(null);
 
         try {
+
+            const objetoAdicionado = {
+                nome: formData.nome,
+                qtdEstoque: formData.qtdEstoque,
+                precoDeVenda: formData.precoDeVenda,
+                precoDeCompra: formData.precoDeCompra,
+                dataDeEntrada: formData.dataDeEntrada,
+                unidadeDeMedida: formData.unidadeDeMedida,
+                descricao: formData.descricao,
+                categoria: formData.categoria,
+                preco: formData.preco,
+                fornecedor: formData.fornecedor,
+                fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
+                acesso: true
+            };
+
             const response = await fetch('URL_DA_SUA_API/produtos', {
                 method: 'POST',
                 headers: {
@@ -43,10 +63,16 @@ function CadastroProduto() {
             alert('Produto cadastrado com sucesso!');
             setFormData({
                 nome: '',
+                qtdEstoque: '',
+                precoDeVenda: '',
+                precoDeCompra: '',
+                dataDeEntrada: '',
+                unidadeDeMedida: '',
                 descricao: '',
-                preco: '',
                 categoria: '',
-                estoque: ''
+                preco: '',
+                fornecedor: ''
+                
             });
         } catch (error) {
             setError(error.message);
@@ -57,7 +83,7 @@ function CadastroProduto() {
 
     return (
         <>
-            <SideBar BreadCrumb='Cadastro de Produtos'/>
+            <SideBar BreadCrumb='Cadastro de Produtos' />
 
             <div className={styles.main}>
 
@@ -92,7 +118,7 @@ function CadastroProduto() {
                             <div className={styles.field}>
                                 <label>Preço de Compra:</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     name="preco"
                                     value={formData.preco}
                                     onChange={handleInputChange}
@@ -114,7 +140,7 @@ function CadastroProduto() {
                             <div className={styles.field}>
                                 <label>Unidade de Medida:</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     name="estoque"
                                     value={formData.estoque}
                                     onChange={handleInputChange}
@@ -129,18 +155,7 @@ function CadastroProduto() {
                                 <label>Descrição:</label>
                                 <input
                                     type="text"
-                                    name="nome"
-                                    value={formData.nome}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Categoria:</label>
-                                <input
-                                    type="text"
-                                    name="descricao"
+                                    name="descricaco"
                                     value={formData.descricao}
                                     onChange={handleInputChange}
                                     required
@@ -148,18 +163,7 @@ function CadastroProduto() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>Quantidade em Estoque:</label>
-                                <input
-                                    type="number"
-                                    name="preco"
-                                    value={formData.preco}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Data de Validade:</label>
+                                <label>Categoria:</label>
                                 <input
                                     type="text"
                                     name="categoria"
@@ -170,11 +174,33 @@ function CadastroProduto() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>Estoque:</label>
+                                <label>Quantidade em Estoque:</label>
                                 <input
                                     type="number"
-                                    name="estoque"
-                                    value={formData.estoque}
+                                    name="qtdEstoque"
+                                    value={formData.qtdEstoque}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Data de Validade:</label>
+                                <input
+                                    type="date"
+                                    name="categoria"
+                                    value={formData.dataDeValidade}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Forncedor:</label>
+                                <input
+                                    type="text"
+                                    name="fornecedor"
+                                    value={formData.fornecedor}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -184,7 +210,7 @@ function CadastroProduto() {
                     </div>
                     <div>
                         <div className={styles.actions}>
-                            <button type="submit" disabled={isSubmitting}>
+                            <button type="submit" disabled={isSubmitting} onClick={handleSubmit}>
                                 {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
                             </button>
                         </div>

@@ -29,6 +29,12 @@ h1 {
     flex-direction: column;
 }
 
+.form_isolada{
+    width: 40%;
+    margin: 0 auto ;
+    text-align: center;
+}
+
 .field {
     margin-bottom: 15px;
 }

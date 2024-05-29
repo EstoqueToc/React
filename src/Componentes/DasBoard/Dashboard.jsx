@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faUsers, faTasks, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine,faSackDollar, faUsers, faTasks, faClock } from '@fortawesome/free-solid-svg-icons';
 import styles from './DashBoard.module.css';
 
 // Registrar os componentes do Chart.js
@@ -43,28 +43,28 @@ function Dashboard() {
     return (
         <div className={styles.dashboard}>
             <header className={styles.header}>
-                <h1>Produtividade do Mês</h1>
+                <h1>Faturamento do Mês</h1>
             </header>
             <div className={styles.stats}>
                 <div className={styles.statCard}>
-                    <FontAwesomeIcon icon={faTasks} className={styles.icon} />
+                    <FontAwesomeIcon icon={faSackDollar} className={styles.icon} />
                     <div className={styles.details}>
                         <h2>300</h2>
-                        <p>Tarefas Concluídas</p>
+                        <p>Faturamento do Mês</p>
                     </div>
                 </div>
                 <div className={styles.statCard}>
                     <FontAwesomeIcon icon={faClock} className={styles.icon} />
                     <div className={styles.details}>
                         <h2>700</h2>
-                        <p>Horas Trabalhadas</p>
+                        <p>Faturamento Mês Anterior</p>
                     </div>
                 </div>
                 <div className={styles.statCard}>
                     <FontAwesomeIcon icon={faUsers} className={styles.icon} />
                     <div className={styles.details}>
                         <h2>50</h2>
-                        <p>Colaboradores</p>
+                        <p>Total de Produtos Perdidos</p>
                     </div>
                 </div>
             </div>
