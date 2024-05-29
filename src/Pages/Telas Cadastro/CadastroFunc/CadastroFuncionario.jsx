@@ -38,7 +38,8 @@ function CadastroFuncionario() {
                 dtNascimento: formData.dtNascimento,
                 cpf: formData.cpf,
                 email: formData.email,
-                fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
+                fkEmpresaId: 1,
+                // fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
                 acesso: true
             };
 
@@ -55,7 +56,6 @@ function CadastroFuncionario() {
 
 
             // Sucesso
-            alert('Produto cadastrado com sucesso!');
             setFormData({
                 nome: formData.nome,
                 senha: formData.senha,
@@ -134,7 +134,7 @@ function CadastroFuncionario() {
                                 <label>Senha:</label>
                                 <input
                                     type="password"
-                                    name="Password"
+                                    name="senha"
                                     value={formData.senha}
                                     onChange={handleInputChange}
                                     required

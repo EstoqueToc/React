@@ -9,7 +9,7 @@ function NotFound() {
       <div >
         <h1>ERROR - 404</h1>
         <h1> Página não encontrada</h1>
-        <p>Sentimos muito,mas que está buscando não existe.</p>
+        <p>Sentimos muito, mas o que está buscando não existe.</p>
 
           <Link to='/' >
             Redirecionar
