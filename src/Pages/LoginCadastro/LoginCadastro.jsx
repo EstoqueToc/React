@@ -44,16 +44,35 @@ const LoginCadastro = () => {
     const [estado, setEstado] = useState("");
     const [cidade, setCidade] = useState("");
 
-
     const handleEnter = () => {
-        api.get(`/usuarios/login/${email}/${senha}`).then((response) => {
+        const login = {
+            email: email,
+            senha: senha
+        };
+
+        api.post(`/usuarios/login`, login)
+        .then((response) => {
+            console.log("API Response:", response);
             const { data } = response;
-            console.log("Você chegou no console log", data);
-            if (data === true) {
+
+            if (data.token) { 
                 toast.success("Login realizado com sucesso!");
+
+                sessionStorage.setItem("EMAIL", data.email);
+                sessionStorage.setItem("ID_EMPRESA", data.fkEmpresa.id);
+                sessionStorage.setItem("ID_USUARIO", data.userId);
+                sessionStorage.setItem("NOME", data.nome);
+                sessionStorage.setItem("FUNCAO", data.funcao);
+                sessionStorage.setItem("ACESSO", data.acesso);
+                sessionStorage.setItem("TOKEN", data.token);
+                console.log("Data", data);
+
                 navigate("/pagina-geral");
+            } else {
+                toast.error("Login falhou. Verifique suas credenciais.");
             }
-        }).catch(() => {
+        }).catch((error) => {
+            console.error("Error during login:", error);
             toast.error("Ocorreu um erro ao verificar os dados, por favor, tente novamente.");
         });
     }
@@ -69,25 +88,47 @@ const LoginCadastro = () => {
             razaoSocial: razaoSocial,
             cnpj: CNPJ,
             emailCorporativo: emailCorporativo,
-            senhaEmpresa: senhaEmpresa,
-            cep: cep,
-            rua: rua,
-            bairro: bairro,
-            cidade: cidade,
-            estado: estado,
+            fklogradouro: null,
             ativo: true,
         };
 
-        api.post(`/empresas/cadastro`, objetoAdicionado)
-            .then(() => {
-                // handleSaveUser();
-                toast.success("Nova Empresa cadastrada com sucesso!");
-                sessionStorage.setItem("editado", JSON.stringify(objetoAdicionado));
+        console.log("Objeto adicionado", objetoAdicionado);
 
-            }).catch(() => {
+        api.post(`/empresas/cadastro`, objetoAdicionado)
+            .then((response) => {
+                console.log("Empresa cadastrada com sucesso!", response.data);
+                handleSaveUser(response.data.id);
+                toast.success("Nova Empresa cadastrada com sucesso!");
+            }).catch((error) => {
+                console.error("Error during empresa cadastro:", error);
                 toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
             });
     };
+
+    const handleSaveUser = (fkEmpresa) => {
+        const usuarioAdicionado = {
+            nome: razaoSocial,
+            CPF: null,
+            email: emailCorporativo,
+            senha: senhaEmpresa,
+            dtNascimento: null,
+            funcao: 'Empresa',
+            acesso: true,
+            fkEmpresa: {
+                id: fkEmpresa
+            }
+        }
+
+        console.log("Usuário adicionado", usuarioAdicionado);
+
+        api.post(`/usuarios/cadastro`, usuarioAdicionado)
+            .then(() => {
+                toast.success("Usuário cadastrado com sucesso!");
+            }).catch((error) => {
+                console.error("Error during usuario cadastro:", error);
+                toast.error("Ocorreu um erro ao salvar os dados do usuario, por favor, tente novamente.");
+            });
+    }
 
     return (
         <>
