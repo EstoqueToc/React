@@ -10,7 +10,7 @@ function Usuario() {
     return (
         <>
 
-            <SideBar BreadCrumb='Usuarios'/>
+            <SideBar BreadCrumb='Usuarios' />
 
             <div className={styles.sec}>
 
@@ -29,11 +29,12 @@ function Usuario() {
                 </div>
 
                 <div className={styles["container-usuarios"]}>
+                    
 
                     <table className={styles["tabela-usuario"]}>
 
                         <thead>
-                            <tr>
+                            <tr className={styles.ajuste}>
                                 <th>Nome de Usuário</th>
                                 <th>Email</th>
                                 <th>Função</th>
@@ -53,6 +54,7 @@ function Usuario() {
                                 <td>arthur.ciliberti@example.com</td>
                                 <td>Admin</td>
                                 <td>Ativo</td>
+
                             </tr>
                         </tbody>
 

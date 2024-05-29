@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine,faSackDollar, faUsers, faTasks, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faBoxesStacked,faSackDollar } from '@fortawesome/free-solid-svg-icons';
 import styles from './DashBoard.module.css';
 
 // Registrar os componentes do Chart.js
@@ -54,14 +54,14 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className={styles.statCard}>
-                    <FontAwesomeIcon icon={faClock} className={styles.icon} />
+                    <FontAwesomeIcon icon={faSackDollar} className={styles.icon} />
                     <div className={styles.details}>
                         <h2>700</h2>
                         <p>Faturamento Mês Anterior</p>
                     </div>
                 </div>
                 <div className={styles.statCard}>
-                    <FontAwesomeIcon icon={faUsers} className={styles.icon} />
+                    <FontAwesomeIcon icon={faBoxesStacked} className={styles.icon} />
                     <div className={styles.details}>
                         <h2>50</h2>
                         <p>Total de Produtos Perdidos</p>

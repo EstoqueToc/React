@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './CadastroProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
+import styles from './attProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
 import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
 
 function CadastroFornecedor() {
@@ -10,7 +10,7 @@ function CadastroFornecedor() {
         preco: '',
         telefone: '',
         email: '',
-        cnpj:''
+        cnpj: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -80,27 +80,24 @@ function CadastroFornecedor() {
 
                 <div className={styles.container}>
 
-                    <h1>Cadastro de Fornecedor</h1>
-
-                    <form className={styles.form_isolada} onSubmit={handleSubmit}>
-
-                        <div className={styles.field}>
-                            <label>Razão Social:</label>
-                            <input
-                                type="text"
-                                name="razaoSocial"
-                                value={formData.razaoSocial}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-
-                    </form>
+                    <h1>Atualização de Produto</h1>
 
                     <div className={styles.lado_lado}>
                         <form className={styles.form} onSubmit={handleSubmit}>
+
                             <div className={styles.field}>
-                                <label>Nome Representante:</label>
+                                <label>ID:</label>
+                                <input
+                                    type="text"
+                                    name="razaoSocial"
+                                    value={formData.razaoSocial}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Produto:</label>
                                 <input
                                     type="text"
                                     name="nome"
@@ -111,22 +108,11 @@ function CadastroFornecedor() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>Nome Fantasia:</label>
+                                <label>Status Estoque:</label>
                                 <input
                                     type="text"
                                     name="nomeFantasia"
                                     value={formData.nomeFantasia}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Preço do Produto:</label>
-                                <input
-                                    type="number"
-                                    name="preco"
-                                    value={formData.preco}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -137,7 +123,18 @@ function CadastroFornecedor() {
                         <form className={styles.form} onSubmit={handleSubmit}>
 
                             <div className={styles.field}>
-                                <label>CNPJ:</label>
+                                <label>Quantidade:</label>
+                                <input
+                                    type="number"
+                                    name="preco"
+                                    value={formData.preco}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Preço Unitario:</label>
                                 <input
                                     type="text"
                                     name="cnpj"
@@ -148,7 +145,7 @@ function CadastroFornecedor() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>E-mail:</label>
+                                <label>Descrição:</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -158,16 +155,7 @@ function CadastroFornecedor() {
                                 />
                             </div>
 
-                            <div className={styles.field}>
-                                <label>Telefone:</label>
-                                <input
-                                    type="number"
-                                    name="telefone"
-                                    value={formData.telefone}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
+
 
                         </form>
 

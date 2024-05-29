@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import './LoginCadastro.css';
-import { BiLogoLinkedin } from "react-icons/bi";
-import { CgFacebook } from "react-icons/cg";
-import { AiOutlineGooglePlus } from "react-icons/ai";
 import NavBar from "../../Componentes/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../api";
-import { Link } from "react-router-dom";
 
 const LoginCadastro = () => {
     useEffect(() => {
@@ -37,15 +33,17 @@ const LoginCadastro = () => {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
-    const [nomeEmpresa, setNomeEmpresa] = useState("");
+    const [razaoSocial, setRazaoSocial] = useState("");
+    const [nomeRepresentante, setNomeRepresentante] = useState("");
     const [CNPJ, setCNPJ] = useState("");
     const [emailCorporativo, setEmailCorporativo] = useState("");
-    const [razaoSocial, setRazaoSocial] = useState("");
     const [senhaEmpresa, setSenhaEmpresa] = useState("");
+    const [cep, setCep] = useState("");
+    const [rua, setRua] = useState("");
+    const [bairro, setBairro] = useState("");
+    const [estado, setEstado] = useState("");
+    const [cidade, setCidade] = useState("");
 
-    // const [nome, setNome] = useState("");
-    // const [CPF, setCPF] = useState("");
-    // const [dtNascimento, setDtNascimento] = useState("");
 
     const handleEnter = () => {
         api.get(`/usuarios/login/${email}/${senha}`).then((response) => {
@@ -65,15 +63,18 @@ const LoginCadastro = () => {
     }
 
     const handleSave = () => {
-        
+
         const objetoAdicionado = {
-            nomeEmpresa: nomeEmpresa,
+            nomeRepresentante: nomeRepresentante,
             razaoSocial: razaoSocial,
             cnpj: CNPJ,
-            telefone: null,
             emailCorporativo: emailCorporativo,
             senhaEmpresa: senhaEmpresa,
-            logradouro: null,
+            cep: cep,
+            rua: rua,
+            bairro: bairro,
+            cidade: cidade,
+            estado: estado,
             ativo: true,
         };
 
@@ -82,81 +83,114 @@ const LoginCadastro = () => {
                 // handleSaveUser();
                 toast.success("Nova Empresa cadastrada com sucesso!");
                 sessionStorage.setItem("editado", JSON.stringify(objetoAdicionado));
-                
+
             }).catch(() => {
                 toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
             });
     };
 
-    // const handleSaveUser = () => {
-    //     const usuarioAdicionado = {
-    //         nome,
-    //         CPF,
-    //         email,
-    //         senha,
-    //         dtNascimento,
-    //         funcao: null,
-    //         acesso: true
-    //     }
-
-    //     console.log("Usuário adicionado", usuarioAdicionado);
-
-    //     api.post(`/usuarios/cadastro`, usuarioAdicionado)
-    //         .then(() => {
-    //             console.log("Usuário cadastrado com sucesso!");
-    //         }).catch(() => {
-    //             toast.error("Ocorreu um erro ao salvar os dados do usuario, por favor, tente novamente.");
-    //         });
-    // }
-
     return (
         <>
             <NavBar />
+
             <div className="container" id="container">
+
                 <div className="form-container cadastrar-se">
+
                     <form>
-                        
+
                         <div className="formulario">
-                           
-                            <input type="text" value={nomeEmpresa} placeholder="Nome Fantasia"
-                                onChange={(e) => handleInputChange(e, setNomeEmpresa)} />
-                            <input type="text" value={CNPJ} placeholder="CNPJ"
-                                onChange={(e) => handleInputChange(e, setCNPJ)} />
-                            <input type="email" value={emailCorporativo} placeholder="E-mail Corporativo"
-                                onChange={(e) => handleInputChange(e, setEmailCorporativo)} />
-                            <input type="text" value={razaoSocial} placeholder="Nome Representante"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
-                            <input type="text" value={razaoSocial} placeholder="CEP"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
-                            <input type="text" value={razaoSocial} placeholder="Rua"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
-                            <input type="text" value={razaoSocial} placeholder="Bairro"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
-                            <input type="text" value={razaoSocial} placeholder="Cidade"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
-                            <input type="text" value={razaoSocial} placeholder="Estado"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)} />
-                            <input type="password" value={senhaEmpresa} placeholder="Senha"
-                                onChange={(e) => handleInputChange(e, setSenhaEmpresa)} />
-                            {/* <input type="text" value={nome} placeholder="Nome" */}
-                                {/* onChange={(e) => handleInputChange(e, setNome)} /> */}
-                            {/* <input type="text" value={CPF} placeholder="CPF" */}
-                                {/* onChange={(e) => handleInputChange(e, setCPF)} /> */}
-                            {/* <input type="text" value={email} placeholder="E-mail Pessoal" */}
-                                {/* onChange={(e) => handleInputChange(e, setEmail)} /> */}
-                            {/* <input type="password" value={senha} placeholder="Senha" */}
-                                {/* onChange={(e) => handleInputChange(e, setSenha)} /> */}
-                            {/* <input type="password" placeholder="Confirmar Senha" /> */}
-                            {/* <input type="date" value={dtNascimento} placeholder="Data de Nascimento" */}
-                                {/* onChange={(e) => handleInputChange(e, setDtNascimento)} /> */}
+
+                            <input
+                                required
+                                type="text"
+                                value={razaoSocial}
+                                placeholder="Nome Fantasia"
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)}
+                            />
+
+                            <input
+                                required
+                                type="text"
+                                value={CNPJ}
+                                placeholder="CNPJ"
+                                onChange={(e) => handleInputChange(e, setCNPJ)}
+
+                            />
+
+                            <input
+                                required
+                                type="email"
+                                value={emailCorporativo}
+                                placeholder="E-mail Corporativo"
+                                onChange={(e) => handleInputChange(e, setEmailCorporativo)}
+                            />
+
+                            <input
+                                required
+                                type="text"
+                                value={nomeRepresentante}
+                                placeholder="Nome Representante"
+                                onChange={(e) => handleInputChange(e, setNomeRepresentante)}
+                            />
+
+                            <input
+                                required
+                                type="text"
+                                value={cep}
+                                placeholder="CEP"
+                                onChange={(e) => handleInputChange(e, setCep)}
+                            />
+
+                            <input
+                                required
+                                type="text"
+                                value={rua}
+                                placeholder="Rua"
+                                onChange={(e) => handleInputChange(e, setRua)}
+                            />
+
+                            <input
+                                required
+                                type="text"
+                                value={bairro}
+                                placeholder="Bairro"
+                                onChange={(e) => handleInputChange(e, setBairro)}
+                            />
+
+                            <input
+                                required
+                                type="text"
+                                value={cidade}
+                                placeholder="Cidade"
+                                onChange={(e) => handleInputChange(e, setCidade)} />
+
+                            <input
+                                required
+                                type="text"
+                                value={estado}
+                                placeholder="Estado"
+                                onChange={(e) => handleInputChange(e, setEstado)}
+                            />
+
+                            <input
+                                required
+                                type="password"
+                                value={senhaEmpresa}
+                                placeholder="Senha"
+                                onChange={(e) => handleInputChange(e, setSenhaEmpresa)}
+                            />
+
+
                         </div>
+
                         <button id="entrar" type="button" onClick={handleSave}>Cadastrar</button>
                     </form>
                 </div>
                 <div className="form-container entrar">
                     <form>
                         <h1>Entrar</h1>
-                       
+
 
                         <input
                             type="email"

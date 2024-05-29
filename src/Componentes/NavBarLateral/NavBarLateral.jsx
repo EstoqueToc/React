@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faUser,faUsers, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faChartLine, faFile, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
-const Menu = ({BreadCrumb}) => {
+const Menu = () => {
     const [submenuFuncionario, setSubmenuFuncionario] = useState(false);
     const [submenuEstoque, setSubmenuEstoque] = useState(false);
     const [submenuRelatorios, setSubmenuRelatorios] = useState(false);
@@ -31,13 +31,6 @@ const Menu = ({BreadCrumb}) => {
                         <img src={userImage} alt="Perfil" className={styles['fotoPerfil']} />
                     </div>
                 </div>
-
-                <section className={styles['breadcrumbSuperior']}>
-                    <ul className={styles['breadcrumb']}>
-                        <li><a href="./inicial.html">Home</a></li>
-                        <li><a href="#" className={styles['localAtual']}>{BreadCrumb}</a></li>
-                    </ul>
-                </section>
             </div>
 
             <nav className={styles['main-menu']}>

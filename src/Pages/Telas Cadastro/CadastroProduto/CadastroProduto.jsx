@@ -83,7 +83,7 @@ function CadastroProduto() {
 
     return (
         <>
-            <SideBar BreadCrumb='Cadastro de Produtos' />
+            <SideBar />
 
             <div className={styles.main}>
 

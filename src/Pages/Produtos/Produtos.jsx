@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import styles from './Produtos.module.css';
 import { Link } from 'react-router-dom';
 
-import adicionarUsuarioImg from '../../Assets/adicionar-usuario.png';
-import IconPark from '../../Assets/icon-park-outline--add.svg';
+import adicionarUsuarioImg from '../../Assets/adicionar-produto.png';
 import OioArrow from '../../Assets/oui--arrow-up.svg';
 import Tabler from '../../Assets/tabler--file-export (1).svg';
 
@@ -79,16 +78,15 @@ function Produtos() {
             <img src={adicionarUsuarioImg} alt="adicionar novo usuario" />
           </Link>
           <div className={styles['header-right']}>
-            <input type='search' />
+            <input type='search' placeholder='Pesquisar' />
             <button className={styles.pesquisar}>Pesquisar</button>
           </div>
         </div>
 
         <div className={styles['container-usuarios']}>
           <h1>Todos seus produtos</h1>
-          <FiltroPrincipal />
-
-          <br />
+          
+          
 
           <div id='quadrado' className={styles.quadrado}>
             <div className={styles.cabecalho} id='cabecalho'>
@@ -99,9 +97,6 @@ function Produtos() {
               />
             </div>
           </div>
-
-          <br />
-          <br />
 
           <h4>Filtros de Status do seu Estoque</h4>
 
