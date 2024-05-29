@@ -5,10 +5,12 @@ import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
 function CadastroFornecedor() {
     const [formData, setFormData] = useState({
         nome: '',
-        descricao: '',
+        nomeFantasia: '',
+        razaoSocial: '',
         preco: '',
-        categoria: '',
-        estoque: ''
+        telefone: '',
+        email: '',
+        cnpj:''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -27,6 +29,19 @@ function CadastroFornecedor() {
         setError(null);
 
         try {
+
+            const objetoAdicionado = {
+                nome: formData.nome,
+                razaoSocial: formData.razaoSocial,
+                nomeSocial: formData.nomeSocial,
+                preco: formData.dtNascimento,
+                cnpj: formData.cpf,
+                email: formData.email,
+                telefone: formData.telefone,
+                fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
+                acesso: true
+            };
+
             const response = await fetch('URL_DA_SUA_API/produtos', {
                 method: 'POST',
                 headers: {
@@ -43,10 +58,12 @@ function CadastroFornecedor() {
             alert('Produto cadastrado com sucesso!');
             setFormData({
                 nome: '',
-                descricao: '',
+                nomeFantasia: '',
+                razaoSocial: '',
+                telefone: '',
+                cnpj: '',
                 preco: '',
-                categoria: '',
-                estoque: ''
+                email: ''
             });
         } catch (error) {
             setError(error.message);
@@ -57,7 +74,7 @@ function CadastroFornecedor() {
 
     return (
         <>
-            <SideBar BreadCrumb='Cadastro de Produtos'/>
+            <SideBar BreadCrumb='Cadastro de Fornecedor' />
 
             <div className={styles.main}>
 
@@ -65,10 +82,25 @@ function CadastroFornecedor() {
 
                     <h1>Cadastro de Fornecedor</h1>
 
+                    <form className={styles.form_isolada} onSubmit={handleSubmit}>
+
+                        <div className={styles.field}>
+                            <label>Razão Social:</label>
+                            <input
+                                type="text"
+                                name="razaoSocial"
+                                value={formData.razaoSocial}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+
+                    </form>
+
                     <div className={styles.lado_lado}>
                         <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.field}>
-                                <label>Nome:</label>
+                                <label>Nome Representante:</label>
                                 <input
                                     type="text"
                                     name="nome"
@@ -79,44 +111,22 @@ function CadastroFornecedor() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>Preço de Venda:</label>
+                                <label>Nome Fantasia:</label>
                                 <input
                                     type="text"
-                                    name="descricao"
-                                    value={formData.descricao}
+                                    name="nomeFantasia"
+                                    value={formData.nomeFantasia}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label>Preço de Compra:</label>
+                                <label>Preço do Produto:</label>
                                 <input
                                     type="number"
                                     name="preco"
                                     value={formData.preco}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Data de Entrada:</label>
-                                <input
-                                    type="text"
-                                    name="categoria"
-                                    value={formData.categoria}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Unidade de Medida:</label>
-                                <input
-                                    type="number"
-                                    name="estoque"
-                                    value={formData.estoque}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -125,66 +135,47 @@ function CadastroFornecedor() {
                         </form>
 
                         <form className={styles.form} onSubmit={handleSubmit}>
+
                             <div className={styles.field}>
-                                <label>Descrição:</label>
+                                <label>CNPJ:</label>
                                 <input
                                     type="text"
-                                    name="nome"
-                                    value={formData.nome}
+                                    name="cnpj"
+                                    value={formData.cnpj}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label>Categoria:</label>
+                                <label>E-mail:</label>
                                 <input
-                                    type="text"
-                                    name="descricao"
-                                    value={formData.descricao}
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label>Quantidade em Estoque:</label>
+                                <label>Telefone:</label>
                                 <input
                                     type="number"
-                                    name="preco"
-                                    value={formData.preco}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Data de Validade:</label>
-                                <input
-                                    type="text"
-                                    name="categoria"
-                                    value={formData.categoria}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Estoque:</label>
-                                <input
-                                    type="number"
-                                    name="estoque"
-                                    value={formData.estoque}
+                                    name="telefone"
+                                    value={formData.telefone}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
                         </form>
+
                     </div>
+
                     <div>
                         <div className={styles.actions}>
-                            <button type="submit" disabled={isSubmitting}>
+                            <button type="submit" disabled={isSubmitting} onClick={handleSubmit}>
                                 {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
                             </button>
                         </div>
