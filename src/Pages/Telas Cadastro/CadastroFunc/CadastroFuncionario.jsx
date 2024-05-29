@@ -123,7 +123,7 @@ function CadastroFuncionario() {
                                 <label>E-mail:</label>
                                 <input
                                     type="email"
-                                    name="Email"
+                                    name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
                                     required
@@ -147,7 +147,7 @@ function CadastroFuncionario() {
                                 <label>Função:</label>
                                 <input
                                     type="text"
-                                    name="Função"
+                                    name="funcao"
                                     value={formData.funcao}
                                     onChange={handleInputChange}
                                     required
