@@ -7,6 +7,19 @@ const api = axios.create({
     // o que torna o código mais seguro e flexível, já que a URL pode ser facilmente alterada sem necessidade de modificar o código.
     baseURL: "http://localhost:8080"
 });
+
+api.interceptors.request.use(
+    config => {
+        const token = sessionStorage.getItem('TOKEN'); // Assumindo que o token está armazenado no localStorage
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
     
 // Exporta a instância criada para que possa ser utilizada em outras partes do projeto.
 export default api;

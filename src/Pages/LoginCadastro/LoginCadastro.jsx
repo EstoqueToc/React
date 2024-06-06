@@ -34,15 +34,16 @@ const LoginCadastro = () => {
     const [senha, setSenha] = useState("");
 
     const [razaoSocial, setRazaoSocial] = useState("");
-    const [nomeRepresentante, setNomeRepresentante] = useState("");
+    const [nomeEmpresa, setNomeEmpresa] = useState("");
     const [CNPJ, setCNPJ] = useState("");
     const [emailCorporativo, setEmailCorporativo] = useState("");
     const [senhaEmpresa, setSenhaEmpresa] = useState("");
-    const [cep, setCep] = useState("");
-    const [rua, setRua] = useState("");
-    const [bairro, setBairro] = useState("");
-    const [estado, setEstado] = useState("");
-    const [cidade, setCidade] = useState("");
+    const [confirmSenhaEmrpesa, setConfirmSenhaEmrpesa] = useState("");
+    // const [cep, setCep] = useState("");
+    // const [rua, setRua] = useState("");
+    // const [bairro, setBairro] = useState("");
+    // const [estado, setEstado] = useState("");
+    // const [cidade, setCidade] = useState("");
 
     const handleEnter = () => {
         const login = {
@@ -59,7 +60,7 @@ const LoginCadastro = () => {
                 toast.success("Login realizado com sucesso!");
 
                 sessionStorage.setItem("EMAIL", data.email);
-                sessionStorage.setItem("ID_EMPRESA", data.fkEmpresa.id);
+                sessionStorage.setItem("ID_EMPRESA", data.empresa.id);
                 sessionStorage.setItem("ID_USUARIO", data.userId);
                 sessionStorage.setItem("NOME", data.nome);
                 sessionStorage.setItem("FUNCAO", data.funcao);
@@ -83,13 +84,24 @@ const LoginCadastro = () => {
 
     const handleSave = () => {
 
+        if (!razaoSocial || !nomeEmpresa || !CNPJ || !emailCorporativo || !senhaEmpresa) {
+            toast.error("Por favor, preencha todos os campos obrigatórios.");
+            return;
+        }
+
+        if (senhaEmpresa !== confirmSenhaEmrpesa) {
+            toast.error("As senhas não coincidem.");
+            return;
+        }
+
         const objetoAdicionado = {
-            nomeRepresentante: nomeRepresentante,
+            nomeEmpresa: nomeEmpresa,
             razaoSocial: razaoSocial,
             cnpj: CNPJ,
+            telefone: '1198754321',
             emailCorporativo: emailCorporativo,
-            fklogradouro: null,
-            ativo: true,
+            logradouro: null,
+            ativo: 1,
         };
 
         console.log("Objeto adicionado", objetoAdicionado);
@@ -112,9 +124,10 @@ const LoginCadastro = () => {
             email: emailCorporativo,
             senha: senhaEmpresa,
             dtNascimento: null,
+            ativo: 1,
             funcao: 'Empresa',
-            acesso: true,
-            fkEmpresa: {
+            acesso: 1,
+            empresa: {
                 id: fkEmpresa
             }
         }
@@ -145,9 +158,9 @@ const LoginCadastro = () => {
                             <input
                                 required
                                 type="text"
-                                value={razaoSocial}
+                                value={nomeEmpresa}
                                 placeholder="Nome Fantasia"
-                                onChange={(e) => handleInputChange(e, setRazaoSocial)}
+                                onChange={(e) => handleInputChange(e, setNomeEmpresa)}
                             />
 
                             <input
@@ -170,12 +183,12 @@ const LoginCadastro = () => {
                             <input
                                 required
                                 type="text"
-                                value={nomeRepresentante}
+                                value={razaoSocial}
                                 placeholder="Nome Representante"
-                                onChange={(e) => handleInputChange(e, setNomeRepresentante)}
+                                onChange={(e) => handleInputChange(e, setRazaoSocial)}
                             />
 
-                            <input
+                            {/* <input
                                 required
                                 type="text"
                                 value={cep}
@@ -212,7 +225,7 @@ const LoginCadastro = () => {
                                 value={estado}
                                 placeholder="Estado"
                                 onChange={(e) => handleInputChange(e, setEstado)}
-                            />
+                            /> */}
 
                             <input
                                 required
@@ -222,6 +235,13 @@ const LoginCadastro = () => {
                                 onChange={(e) => handleInputChange(e, setSenhaEmpresa)}
                             />
 
+                            <input
+                                required
+                                type="password"
+                                value={confirmSenhaEmrpesa}
+                                placeholder="Confirmar Senha"
+                                onChange={(e) => handleInputChange(e, setConfirmSenhaEmrpesa)}
+                            />
 
                         </div>
 

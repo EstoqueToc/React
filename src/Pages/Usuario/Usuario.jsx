@@ -1,38 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Asumiendo que estás usando React Router
-import styles from './Usuario.module.css'; // Importa tus estilos CSS correctamente
-import adicionarUsuarioImg from '../../Assets/adicionar-usuario.png'; // Importa la imagen correctamente
-
-import SideBar from '../../Componentes/NavBarLateral/NavBarLateral'
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import styles from './Usuario.module.css';
+import adicionarUsuarioImg from '../../Assets/adicionar-usuario.png';
+import SideBar from '../../Componentes/NavBarLateral/NavBarLateral';
+import api from '../../api';
+import { toast } from "react-toastify";
 
 function Usuario() {
+    const [usuarios, setUsuarios] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        listarUsuarios();
+    }, []);
+
+    const listarUsuarios = () => {
+        api.get('/usuarios/simples')
+        .then(response => {
+            setUsuarios(response.data);
+        })
+        .catch(error => {
+            toast.error("Erro ao buscar usuários:", error);
+        });
+    };
+
+    const fetchUsuarios = (nome) => {
+        api.get(`/usuarios/simples/${nome}`)
+        .then(response => {
+            setUsuarios(response.data);
+        })
+        .catch(error => {
+            console.error("Erro ao buscar usuários:", error);
+        });
+    };
+
+    const handleSearch = () => {
+        if (searchTerm.trim() === "") {
+            listarUsuarios();
+        } else {
+            fetchUsuarios(searchTerm);
+        }
+    };
+
     return (
         <>
-
             <SideBar BreadCrumb='Usuarios' />
 
             <div className={styles.sec}>
-
                 <div className={styles.header}>
-
                     <Link to='/CadastroFunc' className={styles.logo}>
                         Usuários
                         <img src={adicionarUsuarioImg} alt="adicionar novo usuario" />
                     </Link>
 
                     <div className={styles["header-right"]}>
-                        <input type="search" />
-                        <button >Pesquisar</button>
+                        <input 
+                            type="search" 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} 
+                        />
+                        <button onClick={handleSearch}>Pesquisar</button>
                     </div>
-
                 </div>
 
                 <div className={styles["container-usuarios"]}>
-                    
-
                     <table className={styles["tabela-usuario"]}>
-
                         <thead>
                             <tr className={styles.ajuste}>
                                 <th>Nome de Usuário</th>
@@ -41,31 +73,22 @@ function Usuario() {
                                 <th>Status</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            <tr>
-                                <td>Raquel Guimarães</td>
-                                <td>raquel.guimaraes@example.com</td>
-                                <td>Admin</td>
-                                <td>Ativo</td>
-                            </tr>
-                            <tr>
-                                <td>Arthur Ciliberti</td>
-                                <td>arthur.ciliberti@example.com</td>
-                                <td>Admin</td>
-                                <td>Ativo</td>
-
-                            </tr>
+                            {usuarios.map(usuario => (
+                                <tr key={usuario.id}>
+                                    <td>{usuario.nome}</td>
+                                    <td>{usuario.email}</td>
+                                    <td>{usuario.funcao}</td>
+                                    <td>{usuario.ativo ? 'Ativo' : 'Inativo'}</td>
+                                </tr>
+                            ))}
                         </tbody>
-
                     </table>
-
                 </div>
 
                 <footer className={styles.footer}>
                     <p>&copy;EstoqueToc.</p>
                 </footer>
-
             </div>
         </>
     );

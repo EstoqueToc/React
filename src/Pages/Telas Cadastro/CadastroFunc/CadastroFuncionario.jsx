@@ -9,7 +9,7 @@ function CadastroFuncionario() {
         nome: '',
         senha: '',
         funcao: '',
-        dtNascimento: '',
+        dataNascimento: '',
         cpf: '',
         email: ''
     });
@@ -35,12 +35,14 @@ function CadastroFuncionario() {
                 nome: formData.nome,
                 senha: formData.senha,
                 funcao: formData.funcao,
-                dtNascimento: formData.dtNascimento,
+                dataNascimento: formData.dtNascimento,
                 cpf: formData.cpf,
                 email: formData.email,
-                fkEmpresaId: 1,
-                // fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
-                acesso: true
+                empresa: {
+                    id: sessionStorage.getItem('ID_EMPRESA')
+                },
+                acesso: 0,
+                ativo: 1
             };
 
             api.post(`/usuarios/cadastro`, objetoAdicionado)
@@ -108,8 +110,8 @@ function CadastroFuncionario() {
                                 <label>Data de Nascimento:</label>
                                 <input
                                     type="date"
-                                    name="Data"
-                                    value={formData.dtNascimento}
+                                    name="data"
+                                    value={formData.dataNascimento}
                                     onChange={handleInputChange}
                                     required
                                 />
