@@ -9,13 +9,14 @@ import { toast } from "react-toastify";
 function Usuario() {
     const [usuarios, setUsuarios] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
 
     useEffect(() => {
         listarUsuarios();
     }, []);
 
     const listarUsuarios = () => {
-        api.get('/usuarios/simples')
+        api.get(`/usuarios/simples/${fkEmpresa}`)
         .then(response => {
             setUsuarios(response.data);
         })
@@ -24,8 +25,8 @@ function Usuario() {
         });
     };
 
-    const fetchUsuarios = (nome) => {
-        api.get(`/usuarios/simples/${nome}`)
+    const fetchUsuarios = (nome, fkEmpresa) => {
+        api.get(`/usuarios/simples/${nome}/${fkEmpresa}`)
         .then(response => {
             setUsuarios(response.data);
         })
@@ -38,7 +39,7 @@ function Usuario() {
         if (searchTerm.trim() === "") {
             listarUsuarios();
         } else {
-            fetchUsuarios(searchTerm);
+            fetchUsuarios(searchTerm, fkEmpresa);
         }
     };
 
