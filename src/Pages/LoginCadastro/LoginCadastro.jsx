@@ -62,8 +62,8 @@ const LoginCadastro = () => {
                 sessionStorage.setItem("EMAIL", data.email);
                 sessionStorage.setItem("ID_EMPRESA", data.empresa.id);
                 sessionStorage.setItem("ID_USUARIO", data.userId);
+                sessionStorage.setItem("NOME_EMPRESA", data.empresa.nomeEmpresa);
                 sessionStorage.setItem("NOME", data.nome);
-                sessionStorage.setItem("FUNCAO", data.funcao);
                 sessionStorage.setItem("ACESSO", data.acesso);
                 sessionStorage.setItem("TOKEN", data.token);
                 console.log("Data", data);

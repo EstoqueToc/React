@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import styles from './CadastroProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
 import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
 import { toast } from "react-toastify";
@@ -24,6 +24,29 @@ function CadastroFuncionario() {
         });
     };
 
+    useEffect(() => {
+        editUser();
+    }, []); 
+
+    const editUser = () => {
+        if(sessionStorage.getItem('ID_EDIT_USER') !== null) {
+            api.get(`/usuarios/${sessionStorage.getItem('ID_EDIT_USER')}`)
+            .then(response => {
+                setFormData({
+                    nome: response.data.nome,
+                    senha: "",
+                    funcao: response.data.funcao,
+                    dataNascimento: response.data.dataNascimento,
+                    cpf: response.data.cpf,
+                    email: response.data.email
+                });
+            })
+            .catch(error => {
+                toast.error("Erro ao buscar usuário:", error);
+            });
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -45,19 +68,25 @@ function CadastroFuncionario() {
                 ativo: 1
             };
 
+            if(sessionStorage.getItem('ID_EDIT_USER') !== null) {
+                api.put(`/usuarios/${sessionStorage.getItem('ID_EDIT_USER')}`, objetoAdicionado)
+                .then(() => {
+                    toast.success("Funcionário atualizado com sucesso!");
+                    sessionStorage.removeItem('ID_EDIT_USER');
+                })
+                .catch(() => {
+                    toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+                });
+            } else {
+
             api.post(`/usuarios/cadastro`, objetoAdicionado)
                 .then(() => {
-                    
                     toast.success("Novo funcionario cadastrado com sucesso !");
-                  
                 }).catch(() => {
-
                     toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
-
                 });
+            }
 
-
-            // Sucesso
             setFormData({
                 nome: formData.nome,
                 senha: formData.senha,
@@ -110,7 +139,7 @@ function CadastroFuncionario() {
                                 <label>Data de Nascimento:</label>
                                 <input
                                     type="date"
-                                    name="data"
+                                    name="dataNascimento"
                                     value={formData.dataNascimento}
                                     onChange={handleInputChange}
                                     required

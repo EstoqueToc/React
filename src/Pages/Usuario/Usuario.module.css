@@ -233,3 +233,33 @@
     justify-content: space-around;
 }
 
+.tabela-usuario .acao-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+}
+
+.tabela-usuario .acao-buttons button {
+    margin: 0 8px;
+    padding: 8px 16px;
+    background-color: #F3B44C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.acao-buttons button:hover {
+    background-color: #FF8C00;
+}
+
+.acao-buttons button.editar {
+    background-color: #F3B44C;
+}
+
+.acao-buttons button.excluir {
+    background-color: #DC143C;
+}

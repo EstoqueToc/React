@@ -11,6 +11,9 @@ const Menu = () => {
     const [submenuEstoque, setSubmenuEstoque] = useState(false);
     const [submenuRelatorios, setSubmenuRelatorios] = useState(false);
 
+    const empresa = sessionStorage.getItem('NOME_EMPRESA');
+    const usuario = sessionStorage.getItem('NOME');
+
     const toggleSubmenu = (submenu) => {
         if (submenu === 'funcionario') {
             setSubmenuFuncionario(!submenuFuncionario);
@@ -27,7 +30,7 @@ const Menu = () => {
             <div>
                 <div className={styles['superior']}>
                     <div className={styles['perfil']}>
-                        <h6 className={styles['empresa']}>Empresa x Ltda</h6>
+                        <h6 className={styles['empresa']}>{empresa} x {usuario} &ensp;</h6>
                         <img src={userImage} alt="Perfil" className={styles['fotoPerfil']} />
                     </div>
                 </div>
