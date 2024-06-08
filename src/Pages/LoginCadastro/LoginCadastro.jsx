@@ -39,11 +39,6 @@ const LoginCadastro = () => {
     const [emailCorporativo, setEmailCorporativo] = useState("");
     const [senhaEmpresa, setSenhaEmpresa] = useState("");
     const [confirmSenhaEmrpesa, setConfirmSenhaEmrpesa] = useState("");
-    // const [cep, setCep] = useState("");
-    // const [rua, setRua] = useState("");
-    // const [bairro, setBairro] = useState("");
-    // const [estado, setEstado] = useState("");
-    // const [cidade, setCidade] = useState("");
 
     const handleEnter = () => {
         const login = {
@@ -83,6 +78,8 @@ const LoginCadastro = () => {
     }
 
     const handleSave = () => {
+
+        sessionStorage.clear();
 
         if (!razaoSocial || !nomeEmpresa || !CNPJ || !emailCorporativo || !senhaEmpresa) {
             toast.error("Por favor, preencha todos os campos obrigatórios.");

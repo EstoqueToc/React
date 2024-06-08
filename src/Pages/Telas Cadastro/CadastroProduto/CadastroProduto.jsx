@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CadastroProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
 import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
+import { toast } from "react-toastify";
+import api from '../../../api'; // Supondo que você tenha configurado um arquivo de API
 
 function CadastroProduto() {
     const [formData, setFormData] = useState({
-        nome: '',
-        precoDeVenda: '',
-        precoDeCompra: '',
-        dataDeEntrada: '',
-        unidadeDeMedida: '',
-        descricao: '',
+        nomeProduto: '',
+        descricaoProduto: '',
+        dataValidade: '',
+        precoCompraProduto: '',
+        precoVendaProduto: '',
+        dataEntrada: '',
+        unidadeMedida: '',
+        qtdEntrada: '',
         categoria: '',
-        preco: '',
         fornecedor: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+    const [categorias, setCategorias] = useState([]);
+    const [fornecedores, setFornecedores] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -25,54 +34,57 @@ function CadastroProduto() {
         });
     };
 
+    const fetchData = async () => {
+        try {
+            const empresaId = sessionStorage.getItem('ID_EMPRESA');
+            const categoriaResponse = await api.get(`/categorias/empresa/${empresaId}`);
+            const fornecedorResponse = await api.get(`/fornecedores/empresa/${empresaId}`);
+            setCategorias(categoriaResponse.data);
+            setFornecedores(fornecedorResponse.data);
+        } catch (error) {
+            toast.error('Erro ao buscar categorias e fornecedores', error);
+            setError('Erro ao buscar categorias e fornecedores');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setError(null);
 
         try {
-
             const objetoAdicionado = {
-                nome: formData.nome,
-                qtdEstoque: formData.qtdEstoque,
-                precoDeVenda: formData.precoDeVenda,
-                precoDeCompra: formData.precoDeCompra,
-                dataDeEntrada: formData.dataDeEntrada,
-                unidadeDeMedida: formData.unidadeDeMedida,
-                descricao: formData.descricao,
+                nomeProduto: formData.nomeProduto,
+                descricaoProduto: formData.descricaoProduto,
+                dataValidade: formData.dataValidade,
+                precoCompraProduto: formData.precoCompraProduto,
+                precoVendaProduto: formData.precoVendaProduto,
+                dataEntrada: formData.dataEntrada,
+                unidadeMedida: formData.unidadeMedida,
+                qtdEntrada: formData.qtdEntrada,
                 categoria: formData.categoria,
-                preco: formData.preco,
                 fornecedor: formData.fornecedor,
-                fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
-                acesso: true
+                empresa: sessionStorage.getItem('ID_EMPRESA'),
             };
 
-            const response = await fetch('URL_DA_SUA_API/produtos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            const response = await api.post('/produtos', objetoAdicionado);
 
-            if (!response.ok) {
-                throw new Error('Erro ao cadastrar o produto');
+            if (!response.created) {
+                toast.error('Erro ao cadastrar o produto');
             }
 
-            // Sucesso
             alert('Produto cadastrado com sucesso!');
             setFormData({
-                nome: '',
-                qtdEstoque: '',
-                precoDeVenda: '',
-                precoDeCompra: '',
-                dataDeEntrada: '',
-                unidadeDeMedida: '',
-                descricao: '',
+                nomeProduto: '',
+                descricaoProduto: '',
+                dataValidade: '',
+                precoCompraProduto: '',
+                precoVendaProduto: '',
+                dataEntrada: '',
+                unidadeMedida: '',
+                qtdEntrada: '',
                 categoria: '',
-                preco: '',
                 fornecedor: ''
-                
             });
         } catch (error) {
             setError(error.message);
@@ -80,6 +92,11 @@ function CadastroProduto() {
             setIsSubmitting(false);
         }
     };
+
+    // Renderização condicional enquanto os dados estão sendo carregados
+    if (categorias.length === 0 || fornecedores.length === 0) {
+        return <p>Carregando...</p>;
+    }
 
     return (
         <>
@@ -97,88 +114,19 @@ function CadastroProduto() {
                                 <label>Nome:</label>
                                 <input
                                     type="text"
-                                    name="nome"
-                                    value={formData.nome}
+                                    name="nomeProduto"
+                                    value={formData.nomeProduto}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label>Preço de Venda:</label>
+                                <label>Descrição do Produto:</label>
                                 <input
                                     type="text"
-                                    name="descricao"
-                                    value={formData.descricao}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Preço de Compra:</label>
-                                <input
-                                    type="text"
-                                    name="preco"
-                                    value={formData.preco}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Data de Entrada:</label>
-                                <input
-                                    type="text"
-                                    name="categoria"
-                                    value={formData.categoria}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Unidade de Medida:</label>
-                                <input
-                                    type="text"
-                                    name="estoque"
-                                    value={formData.estoque}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                        </form>
-
-                        <form className={styles.form} onSubmit={handleSubmit}>
-                            <div className={styles.field}>
-                                <label>Descrição:</label>
-                                <input
-                                    type="text"
-                                    name="descricaco"
-                                    value={formData.descricao}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Categoria:</label>
-                                <input
-                                    type="text"
-                                    name="categoria"
-                                    value={formData.categoria}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Quantidade em Estoque:</label>
-                                <input
-                                    type="number"
-                                    name="qtdEstoque"
-                                    value={formData.qtdEstoque}
+                                    name="descricaoProduto"
+                                    value={formData.descricaoProduto}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -188,24 +136,92 @@ function CadastroProduto() {
                                 <label>Data de Validade:</label>
                                 <input
                                     type="date"
-                                    name="categoria"
-                                    value={formData.dataDeValidade}
+                                    name="dataValidade"
+                                    value={formData.dataValidade}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label>Forncedor:</label>
+                                <label>Unidade de Medida:</label>
                                 <input
                                     type="text"
-                                    name="fornecedor"
-                                    value={formData.fornecedor}
+                                    name="unidadeMedida"
+                                    value={formData.unidadeMedida}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        </form>
+
+                        <form className={styles.form} onSubmit={handleSubmit}>
+                            <div className={styles.field}>
+                                <label>Preço da Compra do Produto:</label>
+                                <input
+                                    type="text"
+                                    name="precoCompraProduto"
+                                    value={formData.precoCompraProduto}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
 
+                            <div className={styles.field}>
+                                <label>Preço de Venda do Produto</label>
+                                <input
+                                    type="text"
+                                    name="precoVendaProduto"
+                                    value={formData.precoVendaProduto}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Quantidade de Entrada:</label>
+                                <input
+                                    type="number"
+                                    name="qtdEntrada"
+                                    value={formData.qtdEntrada}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Categoria:</label>
+                                <select
+                                    name="categoria"
+                                    value={formData.categoria}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Selecione uma categoria</option>
+                                    {categorias.map((categoria) => (
+                                        <option key={categoria.id} value={categoria.id}>
+                                            {categoria.nome}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Fornecedor:</label>
+                                <select
+                                    name="fornecedor"
+                                    value={formData.fornecedor}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="">Selecione um fornecedor</option>
+                                    {fornecedores.map((fornecedor) => (
+                                        <option key={fornecedor.id} value={fornecedor.id}>
+                                            {fornecedor.nomeFantasia}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </form>
                     </div>
                     <div>

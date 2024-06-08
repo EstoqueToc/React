@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import styles from './CadastroProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
+import styles from './CadastroProduto.module.css';
 import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
+import { toast } from "react-toastify";
+import api from "../../../api";
 
 function CadastroFornecedor() {
     const [formData, setFormData] = useState({
-        nome: '',
         nomeFantasia: '',
         razaoSocial: '',
-        preco: '',
         telefone: '',
         email: '',
-        cnpj:''
+        cnpj: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -29,44 +29,37 @@ function CadastroFornecedor() {
         setError(null);
 
         try {
-
-            const objetoAdicionado = {
-                nome: formData.nome,
+            const fornecedorData = {
                 razaoSocial: formData.razaoSocial,
-                nomeSocial: formData.nomeSocial,
-                preco: formData.dtNascimento,
-                cnpj: formData.cpf,
+                nomeFantasia: formData.nomeFantasia,
+                cnpj: formData.cnpj,
                 email: formData.email,
                 telefone: formData.telefone,
-                fkEmpresa: sessionStorage.getItem('ID_EMPRESA'),
-                acesso: true
+                ativo: 1,
+                logradouro: null,
             };
 
-            const response = await fetch('URL_DA_SUA_API/produtos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            console.log("Fornecedor data: ", fornecedorData);
 
-            if (!response.ok) {
-                throw new Error('Erro ao cadastrar o produto');
-            }
+            // Enviar requisição para cadastrar o fornecedor
+            const fornecedorResponse = await api.post(`/fornecedores`, fornecedorData);
+            const fornecedorId = fornecedorResponse.data.id;
+            const empresaId = sessionStorage.getItem('ID_EMPRESA');
 
-            // Sucesso
-            alert('Produto cadastrado com sucesso!');
-            setFormData({
-                nome: '',
-                nomeFantasia: '',
-                razaoSocial: '',
-                telefone: '',
-                cnpj: '',
-                preco: '',
-                email: ''
-            });
+            // Criar a relação entre a empresa e o fornecedor
+            const relacaoData = {
+                empresa: empresaId,
+                fornecedor: fornecedorId
+            };
+
+            console.log("Relação data: ", relacaoData);
+
+            await api.post(`/empresaTemFornecedor`, relacaoData);
+
+            toast.success("Novo Fornecedor cadastrado com sucesso!");
         } catch (error) {
-            setError(error.message);
+            setError("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+            toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
         } finally {
             setIsSubmitting(false);
         }
@@ -77,13 +70,9 @@ function CadastroFornecedor() {
             <SideBar />
 
             <div className={styles.main}>
-
                 <div className={styles.container}>
-
                     <h1>Cadastro de Fornecedor</h1>
-
                     <form className={styles.form_isolada} onSubmit={handleSubmit}>
-
                         <div className={styles.field}>
                             <label>Razão Social:</label>
                             <input
@@ -94,17 +83,16 @@ function CadastroFornecedor() {
                                 required
                             />
                         </div>
-
                     </form>
 
                     <div className={styles.lado_lado}>
                         <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.field}>
-                                <label>Nome Representante:</label>
+                                <label>Razão Social:</label>
                                 <input
                                     type="text"
-                                    name="nome"
-                                    value={formData.nome}
+                                    name="razaoSocial"
+                                    value={formData.razaoSocial}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -122,21 +110,6 @@ function CadastroFornecedor() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>Preço do Produto:</label>
-                                <input
-                                    type="number"
-                                    name="preco"
-                                    value={formData.preco}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                        </form>
-
-                        <form className={styles.form} onSubmit={handleSubmit}>
-
-                            <div className={styles.field}>
                                 <label>CNPJ:</label>
                                 <input
                                     type="text"
@@ -146,7 +119,9 @@ function CadastroFornecedor() {
                                     required
                                 />
                             </div>
+                        </form>
 
+                        <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.field}>
                                 <label>E-mail:</label>
                                 <input
@@ -161,16 +136,14 @@ function CadastroFornecedor() {
                             <div className={styles.field}>
                                 <label>Telefone:</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     name="telefone"
                                     value={formData.telefone}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
-
                         </form>
-
                     </div>
 
                     <div>
