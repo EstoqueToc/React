@@ -218,6 +218,18 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
+.tabela-usuario .acao-buttons-acoes button {
+    margin: 0 8px;
+    padding: 8px 16px;
+    background-color: #F3B44C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
 .acao-buttons button:hover {
     background-color: #FF8C00;
 }
@@ -228,6 +240,10 @@
 
 .acao-buttons button.movimentacao {
     background-color: #57de79;
+}
+
+.acao-buttons button.excluir {
+    background-color: #ff4d4d;
 }
 
 /* Modal */

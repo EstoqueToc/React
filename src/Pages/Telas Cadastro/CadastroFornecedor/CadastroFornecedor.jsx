@@ -44,15 +44,13 @@ function CadastroFornecedor() {
             // Enviar requisição para cadastrar o fornecedor
             const fornecedorResponse = await api.post(`/fornecedores`, fornecedorData);
             const fornecedorId = fornecedorResponse.data.id;
-            const empresaId = sessionStorage.getItem('ID_EMPRESA');
+            const empresaId = parseInt(sessionStorage.getItem('ID_EMPRESA'), 10);
 
             // Criar a relação entre a empresa e o fornecedor
             const relacaoData = {
-                empresa: empresaId,
-                fornecedor: fornecedorId
+                empresa: { id: empresaId },  // Assumindo que o backend espera um objeto
+                fornecedor: {id : fornecedorId}
             };
-
-            console.log("Relação data: ", relacaoData);
 
             await api.post(`/empresaTemFornecedor`, relacaoData);
 

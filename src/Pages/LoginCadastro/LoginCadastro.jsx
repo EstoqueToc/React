@@ -63,7 +63,7 @@ const LoginCadastro = () => {
                 sessionStorage.setItem("TOKEN", data.token);
                 console.log("Data", data);
 
-                navigate("/pagina-geral");
+                navigate("/dashBoard");
             } else {
                 toast.error("Login falhou. Verifique suas credenciais.");
             }

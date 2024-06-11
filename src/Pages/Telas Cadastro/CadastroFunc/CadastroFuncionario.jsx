@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CadastroProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
 import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
 import { toast } from "react-toastify";
@@ -15,6 +15,14 @@ function CadastroFuncionario() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        if (sessionStorage.getItem('ID_EDIT_USER') !== null) {
+            setIsEditing(true);
+            editUser();
+        }
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -24,26 +32,19 @@ function CadastroFuncionario() {
         });
     };
 
-    useEffect(() => {
-        editUser();
-    }, []); 
-
-    const editUser = () => {
-        if(sessionStorage.getItem('ID_EDIT_USER') !== null) {
-            api.get(`/usuarios/${sessionStorage.getItem('ID_EDIT_USER')}`)
-            .then(response => {
-                setFormData({
-                    nome: response.data.nome,
-                    senha: "",
-                    funcao: response.data.funcao,
-                    dataNascimento: response.data.dataNascimento,
-                    cpf: response.data.cpf,
-                    email: response.data.email
-                });
-            })
-            .catch(error => {
-                toast.error("Erro ao buscar usuário:", error);
+    const editUser = async () => {
+        try {
+            const response = await api.get(`/usuarios/${sessionStorage.getItem('ID_EDIT_USER')}`);
+            setFormData({
+                nome: response.data.nome,
+                senha: "",
+                funcao: response.data.funcao,
+                dataNascimento: response.data.dataNascimento,
+                cpf: response.data.cpf,
+                email: response.data.email
             });
+        } catch (error) {
+            toast.error("Erro ao buscar usuário:", error);
         }
     };
 
@@ -53,12 +54,11 @@ function CadastroFuncionario() {
         setError(null);
 
         try {
-
             const objetoAdicionado = {
                 nome: formData.nome,
                 senha: formData.senha,
                 funcao: formData.funcao,
-                dataNascimento: formData.dtNascimento,
+                dataNascimento: formData.dataNascimento,
                 cpf: formData.cpf,
                 email: formData.email,
                 empresa: {
@@ -68,32 +68,22 @@ function CadastroFuncionario() {
                 ativo: 1
             };
 
-            if(sessionStorage.getItem('ID_EDIT_USER') !== null) {
-                api.put(`/usuarios/${sessionStorage.getItem('ID_EDIT_USER')}`, objetoAdicionado)
-                .then(() => {
-                    toast.success("Funcionário atualizado com sucesso!");
-                    sessionStorage.removeItem('ID_EDIT_USER');
-                })
-                .catch(() => {
-                    toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
-                });
+            if (isEditing) {
+                await api.put(`/usuarios/${sessionStorage.getItem('ID_EDIT_USER')}`, objetoAdicionado);
+                toast.success("Funcionário atualizado com sucesso!");
+                sessionStorage.removeItem('ID_EDIT_USER');
             } else {
-
-            api.post(`/usuarios/cadastro`, objetoAdicionado)
-                .then(() => {
-                    toast.success("Novo funcionario cadastrado com sucesso !");
-                }).catch(() => {
-                    toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
-                });
+                await api.post(`/usuarios/cadastro`, objetoAdicionado);
+                toast.success("Novo funcionário cadastrado com sucesso!");
             }
 
             setFormData({
-                nome: formData.nome,
-                senha: formData.senha,
-                funcao: formData.funcao,
-                dtNascimento: formData.dtNascimento,
-                cpf: formData.cpf,
-                email: formData.email,
+                nome: '',
+                senha: '',
+                funcao: '',
+                dataNascimento: '',
+                cpf: '',
+                email: ''
             });
         } catch (error) {
             setError(error.message);
@@ -107,10 +97,8 @@ function CadastroFuncionario() {
             <SideBar />
 
             <div className={styles.main}>
-
                 <div className={styles.container}>
-
-                    <h1>Cadastro de Funcionario</h1>
+                    <h1>{isEditing ? 'Editar Funcionário' : 'Cadastro de Funcionário'}</h1>
 
                     <div className={styles.lado_lado}>
                         <form className={styles.form} onSubmit={handleSubmit}>
@@ -145,11 +133,9 @@ function CadastroFuncionario() {
                                     required
                                 />
                             </div>
-
                         </form>
 
                         <form className={styles.form} onSubmit={handleSubmit}>
-
                             <div className={styles.field}>
                                 <label>E-mail:</label>
                                 <input
@@ -172,8 +158,6 @@ function CadastroFuncionario() {
                                 />
                             </div>
 
-
-
                             <div className={styles.field}>
                                 <label>Função:</label>
                                 <input
@@ -184,19 +168,17 @@ function CadastroFuncionario() {
                                     required
                                 />
                             </div>
-
                         </form>
                     </div>
 
                     <div>
                         <div className={styles.actions}>
                             <button type="submit" disabled={isSubmitting} onClick={handleSubmit}>
-                                {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
+                                {isSubmitting ? (isEditing ? 'Atualizando...' : 'Cadastrando...') : (isEditing ? 'Editar' : 'Cadastrar')}
                             </button>
                         </div>
                         {error && <p className={styles.error}>{error}</p>}
                     </div>
-
                 </div>
             </div>
         </>

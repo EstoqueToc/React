@@ -29,9 +29,17 @@ function CadastroProduto() {
     const [fornecedores, setFornecedores] = useState([]);
     const [showCategoriaModal, setShowCategoriaModal] = useState(false);
     const [newCategoria, setNewCategoria] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
+            setIsEditing(true);
+            editProduto();
+        }
     }, []);
 
     const handleInputChange = (e) => {
@@ -53,7 +61,6 @@ function CadastroProduto() {
         });
     };
 
-
     const fetchData = async () => {
         try {
             const empresaId = sessionStorage.getItem('ID_EMPRESA');
@@ -61,41 +68,35 @@ function CadastroProduto() {
             const fornecedorResponse = await api.get(`/fornecedores/empresa/${empresaId}`);
             setCategorias(categoriaResponse.data);
             setFornecedores(fornecedorResponse.data);
-            if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
-                editProduto();
-            }
         } catch (error) {
             toast.error('Erro ao buscar categorias e fornecedores', error);
             setError('Erro ao buscar categorias e fornecedores');
         }
     };
 
-    const editProduto = () => {
-        if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
-            api.get(`/produtos/${sessionStorage.getItem('ID_EDIT_PRODUTO')}`)
-                .then(response => {
-                    setFormData({
-                        nomeProduto: response.data.nomeProduto,
-                        descricaoProduto: response.data.descricaoProduto,
-                        dataValidade: response.data.dataValidade,
-                        precoCompraProduto: response.data.precoCompraProduto,
-                        precoVendaProduto: response.data.precoVendaProduto,
-                        dataEntrada: response.data.dataEntrada,
-                        unidadeMedida: response.data.unidadeMedida,
-                        qtdEntrada: response.data.qtdEntrada,
-                        categoria: response.data.categoria.id,
-                        fornecedor: response.data.fornecedor.id,
-                        alerta: {
-                            alertaModerado: '',
-                            alertaGrave: ''
-                        }
-                    });
-                })
-                .catch(error => {
-                    toast.error('Erro ao buscar produto:', error);
-                });
+    const editProduto = async () => {
+        try {
+            const response = await api.get(`/produtos/${sessionStorage.getItem('ID_EDIT_PRODUTO')}`);
+            setFormData({
+                nomeProduto: response.data.nomeProduto,
+                descricaoProduto: response.data.descricaoProduto,
+                dataValidade: response.data.dataValidade,
+                precoCompraProduto: response.data.precoCompraProduto,
+                precoVendaProduto: response.data.precoVendaProduto,
+                dataEntrada: response.data.dataEntrada,
+                unidadeMedida: response.data.unidadeMedida,
+                qtdEntrada: response.data.qtdEntrada,
+                categoria: response.data.categoria.id,
+                fornecedor: response.data.fornecedor.id,
+                alerta: {
+                    alertaModerado: '',
+                    alertaGrave: ''
+                }
+            });
+        } catch (error) {
+            toast.error('Erro ao buscar produto:', error);
         }
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -129,32 +130,31 @@ function CadastroProduto() {
                 }
             };
 
-            if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
-                const response = await api.put(`/produtos/${sessionStorage.getItem('ID_EDIT_PRODUTO')}`, objetoAdicionado);
+            if (isEditing) {
+                await api.put(`/produtos/${sessionStorage.getItem('ID_EDIT_PRODUTO')}`, objetoAdicionado);
                 toast.success('Produto atualizado com sucesso!');
                 sessionStorage.removeItem('ID_EDIT_PRODUTO');
                 navigate('/Produtos');
+            } else {
+                await api.post('/produtos', objetoAdicionado);
+                toast.success('Produto cadastrado com sucesso!');
+                setFormData({
+                    nomeProduto: '',
+                    descricaoProduto: '',
+                    dataValidade: '',
+                    precoCompraProduto: '',
+                    precoVendaProduto: '',
+                    dataEntrada: '',
+                    unidadeMedida: '',
+                    qtdEntrada: '',
+                    categoria: '',
+                    fornecedor: '',
+                    alerta: {
+                        alertaModerado: '',
+                        alertaGrave: ''
+                    }
+                });
             }
-
-            const response = await api.post('/produtos', objetoAdicionado);
-
-            toast.success('Produto cadastrado com sucesso!');
-            setFormData({
-                nomeProduto: '',
-                descricaoProduto: '',
-                dataValidade: '',
-                precoCompraProduto: '',
-                precoVendaProduto: '',
-                dataEntrada: '',
-                unidadeMedida: '',
-                qtdEntrada: '',
-                categoria: '',
-                fornecedor: '',
-                alerta: {
-                    alertaModerado: '',
-                    alertaGrave: ''
-                }
-            });
         } catch (error) {
             setError(error.message);
         } finally {
@@ -209,7 +209,7 @@ function CadastroProduto() {
 
             <div className={styles.main}>
                 <div className={styles.container}>
-                    <h1>Cadastro de Produto</h1>
+                    <h1>{isEditing ? 'Editar Produto' : 'Cadastro de Produto'}</h1>
 
                     <div className={styles.lado_lado}>
                         <form className={styles.form} onSubmit={handleSubmit}>
@@ -302,7 +302,7 @@ function CadastroProduto() {
                                 >
                                     <option value="">Selecione uma categoria</option>
                                     <option value="nova_categoria">Cadastrar nova categoria + </option>
-                                    {categorias.map((categoria) => (
+                                    {Array.isArray(categorias) && categorias.map((categoria) => (
                                         <option key={categoria.id} value={categoria.id}>
                                             {categoria.nome}
                                         </option>
@@ -320,7 +320,7 @@ function CadastroProduto() {
                                 >
                                     <option value="">Selecione um fornecedor</option>
                                     <option value="novo_fornecedor">Cadastrar novo fornecedor + </option>
-                                    {fornecedores.map((fornecedor) => (
+                                    {fornecedores && fornecedores.map((fornecedor) => (
                                         <option key={fornecedor.id} value={fornecedor.id}>
                                             {fornecedor.nomeFantasia}
                                         </option>
@@ -349,13 +349,12 @@ function CadastroProduto() {
                                     required
                                 />
                             </div>
-
                         </form>
                     </div>
                     <div>
                         <div className={styles.actions}>
                             <button type="submit" disabled={isSubmitting} onClick={handleSubmit}>
-                                {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
+                                {isSubmitting ? (isEditing ? 'Atualizando...' : 'Cadastrando...') : (isEditing ? 'Editar' : 'Cadastrar')}
                             </button>
                         </div>
                         {error && <p className={styles.error}>{error}</p>}
