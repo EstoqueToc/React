@@ -16,9 +16,22 @@ function Usuario() {
     const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
 
     useEffect(() => {
+        const listarUsuarios = () => {
+            api.get(`/usuarios/simples/${fkEmpresa}`)
+            .then(response => {
+                setUsuarios(response.data);
+            })
+            .catch(error => {
+                toast.error("Erro ao buscar usuários:", error);
+            });
+        };
+    
         setAcesso(parseInt(sessionStorage.getItem("ACESSO"), 10));
         listarUsuarios();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Array de dependências vazio por propósito
+    
+    
 
     const listarUsuarios = () => {
         api.get(`/usuarios/simples/${fkEmpresa}`)

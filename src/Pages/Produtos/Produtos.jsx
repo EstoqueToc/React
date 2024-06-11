@@ -23,8 +23,22 @@ function Produtos() {
   const acesso = sessionStorage.getItem('ACESSO');
 
   useEffect(() => {
+    const fetchInformacoesEstoque = async () => {
+      try {
+        const response = await api.get('/estoque/informacoes', {
+          params: { empresaId },
+        });
+        setProdutos(response.data);
+      } catch (error) {
+        console.error('Erro:', error);
+      }
+    };
+  
     fetchInformacoesEstoque();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // <- Array de dependências vazio por propósito
+  
+  
 
   const fetchInformacoesEstoque = async () => {
     try {
