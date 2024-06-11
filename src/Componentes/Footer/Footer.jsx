@@ -38,10 +38,10 @@ function Footer() {
                     <div className={styles["acompanhe"]}>
                         <h2>Acompanhe nossa redes sociais:</h2>
                         <div className="social-icons">
-                            <a href="#"><BsFacebook></BsFacebook></a>
-                            <a href="#"><BsTwitterX></BsTwitterX></a>
-                            <a href="#"><BsInstagram></BsInstagram></a>
-                            <a href="#"><BsGithub></BsGithub></a>
+                            <a href="https://www.google.com/"><BsFacebook></BsFacebook></a>
+                            <a href="https://www.google.com/"><BsTwitterX></BsTwitterX></a>
+                            <a href="https://www.google.com/"><BsInstagram></BsInstagram></a>
+                            <a href="https://www.google.com/"><BsGithub></BsGithub></a>
                         </div>
                     </div>
                 </div>
