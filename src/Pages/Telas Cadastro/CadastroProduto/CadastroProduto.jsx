@@ -17,7 +17,11 @@ function CadastroProduto() {
         unidadeMedida: '',
         qtdEntrada: '',
         categoria: '',
-        fornecedor: ''
+        fornecedor: '',
+        alerta: {
+            alertaModerado: '',
+            alertaGrave: ''
+        }
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -38,6 +42,18 @@ function CadastroProduto() {
         });
     };
 
+    const handleAlertaInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            alerta: {
+                ...formData.alerta,
+                [name]: value
+            }
+        });
+    };
+
+
     const fetchData = async () => {
         try {
             const empresaId = sessionStorage.getItem('ID_EMPRESA');
@@ -45,11 +61,41 @@ function CadastroProduto() {
             const fornecedorResponse = await api.get(`/fornecedores/empresa/${empresaId}`);
             setCategorias(categoriaResponse.data);
             setFornecedores(fornecedorResponse.data);
+            if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
+                editProduto();
+            }
         } catch (error) {
             toast.error('Erro ao buscar categorias e fornecedores', error);
             setError('Erro ao buscar categorias e fornecedores');
         }
     };
+
+    const editProduto = () => {
+        if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
+            api.get(`/produtos/${sessionStorage.getItem('ID_EDIT_PRODUTO')}`)
+                .then(response => {
+                    setFormData({
+                        nomeProduto: response.data.nomeProduto,
+                        descricaoProduto: response.data.descricaoProduto,
+                        dataValidade: response.data.dataValidade,
+                        precoCompraProduto: response.data.precoCompraProduto,
+                        precoVendaProduto: response.data.precoVendaProduto,
+                        dataEntrada: response.data.dataEntrada,
+                        unidadeMedida: response.data.unidadeMedida,
+                        qtdEntrada: response.data.qtdEntrada,
+                        categoria: response.data.categoria.id,
+                        fornecedor: response.data.fornecedor.id,
+                        alerta: {
+                            alertaModerado: '',
+                            alertaGrave: ''
+                        }
+                    });
+                })
+                .catch(error => {
+                    toast.error('Erro ao buscar produto:', error);
+                });
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,18 +112,33 @@ function CadastroProduto() {
                 dataEntrada: formData.dataEntrada,
                 unidadeMedida: formData.unidadeMedida,
                 qtdEntrada: formData.qtdEntrada,
-                categoria: formData.categoria,
-                fornecedor: formData.fornecedor,
-                empresa: sessionStorage.getItem('ID_EMPRESA'),
+                categoria: {
+                    id: formData.categoria
+                },
+                fornecedor: {
+                    id: formData.fornecedor
+                },
+                alerta: [
+                    {
+                        alertaModerado: formData.alerta.alertaModerado,
+                        alertaGrave: formData.alerta.alertaGrave
+                    }
+                ],
+                empresa: {
+                    id: sessionStorage.getItem('ID_EMPRESA')
+                }
             };
+
+            if (sessionStorage.getItem('ID_EDIT_PRODUTO') !== null) {
+                const response = await api.put(`/produtos/${sessionStorage.getItem('ID_EDIT_PRODUTO')}`, objetoAdicionado);
+                toast.success('Produto atualizado com sucesso!');
+                sessionStorage.removeItem('ID_EDIT_PRODUTO');
+                navigate('/Produtos');
+            }
 
             const response = await api.post('/produtos', objetoAdicionado);
 
-            if (!response.created) {
-                toast.error('Erro ao cadastrar o produto');
-            }
-
-            alert('Produto cadastrado com sucesso!');
+            toast.success('Produto cadastrado com sucesso!');
             setFormData({
                 nomeProduto: '',
                 descricaoProduto: '',
@@ -88,7 +149,11 @@ function CadastroProduto() {
                 unidadeMedida: '',
                 qtdEntrada: '',
                 categoria: '',
-                fornecedor: ''
+                fornecedor: '',
+                alerta: {
+                    alertaModerado: '',
+                    alertaGrave: ''
+                }
             });
         } catch (error) {
             setError(error.message);
@@ -122,9 +187,11 @@ function CadastroProduto() {
     const handleAddCategoria = async () => {
         try {
             const empresaId = sessionStorage.getItem('ID_EMPRESA');
-            const response = await api.post('/categorias', { nome: newCategoria, empresa: {
-                id: empresaId
-            }});
+            const response = await api.post('/categorias', {
+                nome: newCategoria, empresa: {
+                    id: empresaId
+                }
+            });
             toast.success(`Categoria ${response.data.nome} adicionada com sucesso`);
             setCategorias([...categorias, response.data]);
             setNewCategoria('');
@@ -189,6 +256,17 @@ function CadastroProduto() {
                                     required
                                 />
                             </div>
+
+                            <div className={styles.field}>
+                                <label>Quantidade de Entrada:</label>
+                                <input
+                                    type="number"
+                                    name="qtdEntrada"
+                                    value={formData.qtdEntrada}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
                         </form>
 
                         <form className={styles.form} onSubmit={handleSubmit}>
@@ -209,17 +287,6 @@ function CadastroProduto() {
                                     type="text"
                                     name="precoVendaProduto"
                                     value={formData.precoVendaProduto}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Quantidade de Entrada:</label>
-                                <input
-                                    type="number"
-                                    name="qtdEntrada"
-                                    value={formData.qtdEntrada}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -260,6 +327,29 @@ function CadastroProduto() {
                                     ))}
                                 </select>
                             </div>
+
+                            <div className={styles.field}>
+                                <label>Alerta Moderado:</label>
+                                <input
+                                    type="number"
+                                    name="alertaModerado"
+                                    value={formData.alerta.alertaModerado}
+                                    onChange={handleAlertaInputChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.field}>
+                                <label>Alerta Grave:</label>
+                                <input
+                                    type="number"
+                                    name="alertaGrave"
+                                    value={formData.alerta.alertaGrave}
+                                    onChange={handleAlertaInputChange}
+                                    required
+                                />
+                            </div>
+
                         </form>
                     </div>
                     <div>

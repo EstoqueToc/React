@@ -68,13 +68,13 @@ function Produtos() {
     try {
       switch (filtro) {
         case 'alto':
-          const responseAlto = await api.get(`/estoque/alto`,{
+          const responseAlto = await api.get(`/estoque/alto`, {
             params: { empresaId },
           });
           setProdutos(responseAlto.data);
           break;
         case 'medio':
-          const responseMedio = await api.get(`/estoque/medio`,{
+          const responseMedio = await api.get(`/estoque/medio`, {
             params: { empresaId },
           });
           setProdutos(responseMedio.data);
@@ -95,7 +95,7 @@ function Produtos() {
   };
 
   const handleEdit = (produtoId) => {
-    sessionStorage.setItem('ID_EDIT_Produto', produtoId);
+    sessionStorage.setItem('ID_EDIT_PRODUTO', produtoId);
     navigate('/CadastroProduto');
   };
 
@@ -190,12 +190,12 @@ function Produtos() {
     if (historico.length === 0) {
       return;
     }
-  
+
     try {
       for (let i = 0; i <= indiceHistorico; i++) {
         const operacao = historico[i];
         const { tipo, produtoId, quantidadeAlterada } = operacao;
-  
+
         console.log("Valor da quantidade alterada: ", quantidadeAlterada)
 
         if (tipo === 'adicionar') {
@@ -204,7 +204,7 @@ function Produtos() {
           await api.post(`/estoque/remover/${produtoId}?quantidadeAlterada=${quantidadeAlterada}`);
         }
       }
-  
+
       toast.success('Alterações salvas com sucesso.');
     } catch (error) {
       console.error('Erro ao salvar alterações:', error);
@@ -214,7 +214,28 @@ function Produtos() {
       setIndiceHistorico(-1);
       fetchInformacoesEstoque(); // Atualiza as informações de estoque após salvar as alterações
     }
-  };  
+  };
+
+  const handleExportarRelatorio = async () => {
+    try {
+      await api.post('/produtos/csv/produto');
+
+      const response = await api.get('/produtos/csv/produto/download', {
+        responseType: 'blob',
+      });
+
+      // Crie um link para fazer o download do arquivo
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'produtos.csv');
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Erro ao exportar o relatório:', error);
+      toast.error('Erro ao exportar o relatório. Por favor, tente novamente.');
+    }
+  };
 
   return (
     <>
@@ -250,6 +271,15 @@ function Produtos() {
               <input
                 type='radio'
                 name='prioridade'
+                value=''
+                checked={filtroEstoque === ''}
+                onChange={handleFiltroChange}
+              /> Todos
+            </div>
+            <div>
+              <input
+                type='radio'
+                name='prioridade'
                 value='alto'
                 checked={filtroEstoque === 'alto'}
                 onChange={handleFiltroChange}
@@ -275,8 +305,8 @@ function Produtos() {
             </div>
           </div>
 
-          <button className={styles.exportarRelatorio}>
-            <img src={Tabler} alt='' />
+          <button onClick={handleExportarRelatorio} className={styles.exportarRelatorio}>
+            <img src={Tabler} alt="Exportar Relatório" />
             Exportar Relatório
           </button>
 

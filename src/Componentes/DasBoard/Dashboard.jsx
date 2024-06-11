@@ -38,6 +38,8 @@ function Dashboard() {
 
     // Função para converter YYYY-MM em nome do mês
     const convertMonthFormat = (yyyyMM) => {
+        if (!yyyyMM) return '';
+
         const [year, month] = yyyyMM.split('-');
         const monthNames = [
             'Janeiro', 'Fevereiro', 'Março', 'Abril',
