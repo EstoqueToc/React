@@ -1,22 +1,20 @@
-.navColection{
-    display:flex;
+/* Navegação Principal */
+.navColection {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 2px solid black;
-    padding-left: 45%;
-    padding-top: 0.5%;
+    padding: 0.5% 5%;
 }
 
-
-/*HEADER USUARIO*/
+/* Cabeçalho Principal */
 .header {
     overflow: hidden;
     background-color: #f1f1f1;
-    padding: 10px 10px;
-    
+    padding: 20px 5%;
 }
-  
+
 .header a {
-    float: left;
     color: black;
     text-align: center;
     padding: 12px;
@@ -25,21 +23,17 @@
     line-height: 25px;
     border-radius: 4px;
 }
-  
+
 .header a.logo {
     font-size: 25px;
     font-weight: bold;
+}
 
-}
-  
-.header-right {
-    float: right;
-}
-.logo img{
+.logo img {
     width: 35px;
 }
 
-.logo  {
+.logo {
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
@@ -51,84 +45,57 @@
     border: 2px solid #F3B44C;
     transition: 0.5s;
 }
+
 .logo:hover {
     background-color: #F3B44C;
     border: 2px solid #F3B44C;
     color: #000;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    font-family: 'Poppins';
 }
 
-.header .header-right{
-    width: 40%;
+.header .header-right {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
 .header .header-right input[type=search] {
-    width: 200px;
+    width: 250px;
     padding: 10px 15px;
-    margin: 8px 0;
-    box-sizing: border-box;
     border-radius: 10px;
-    border-bottom: 2px solid black;
-    border-left: 2px solid black;
-}
-  
-@media screen and (max-width: 500px) {
-    .header a {
-      float: none;
-      display: block;
-      text-align: left;
-    }
-    .header-right {
-      float: none;
-    }
+    border: 2px solid black;
 }
 
-/*ICONE DE ADICIONAR*/
-.header img{
-    
-    padding-left: 5px;     
-}
-
-
-/*BOTAO DE PESQUISAR USUARIO*/
 .header .header-right button {
     padding: 10px 15px;
-    margin: 8px 0;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 14px;
     font-family: 'Poppins';
     background-color: white;
     color: #000;
-    border: 2px solid #F3B44C; 
-    transition: ease-in-out .5s;
+    border: 2px solid #F3B44C;
+    transition: 0.5s;
 }
 
 .header .header-right button:hover {
-    background-color: #F3B44C; 
-    border: 2px solid #F3B44C; 
+    background-color: #F3B44C;
+    border: 2px solid #F3B44C;
     color: #000;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    font-family: 'Poppins';
 }
 
-/*TABELA DE USUARIO*/
+@media screen and (max-width: 500px) {
+    .header a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
+}
+
+/* Contêiner de Usuários */
 .container-usuarios {
     margin: 50px auto;
-    width: 100%;
-    padding-left: 18%;
+    width: 90%;
 }
 
 #quadrado {
@@ -139,10 +106,11 @@
     transition: all 0.2s ease;
     cursor: pointer;
 }
+
 #quadrado.ampliado {
-    width: 100%;
     height: 15rem;
 }
+
 #campos {
     display: none;
     justify-content: center;
@@ -151,51 +119,46 @@
     text-align: center;
     padding-top: 4%;
 }
-#quadrado.ampliado #campos{
+
+#quadrado.ampliado #campos {
     display: block;
 }
 
-.cabecalho{
+.cabecalho {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 1%;
 }
-#campos {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    padding-top: 4%;
-}
-.inputs-informations{
+
+.inputs-informations {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-.botaoCadStatus{
+
+.botaoCadStatus {
     align-items: center;
     padding-top: 3%;
 }
+
 .btnCadStatus {
     padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
     font-size: 14px;
     font-family: 'Poppins';
     background-color: white;
     color: #000;
-    border: 2px solid #F3B44C; 
+    border: 2px solid #F3B44C;
     transition: background-color 0.3s, border 0.3s, color 0.3s;
 }
 
 .btnCadStatus:hover {
-    background-color: #F3B44C; 
-    border-color: #F3B44C; 
+    background-color: #F3B44C;
+    border-color: #F3B44C;
     color: #000;
 }
-.filtroStatus{
+
+.filtroStatus {
     width: 30%;
     display: flex;
     justify-content: space-between;
@@ -203,15 +166,17 @@
     padding: 1% 1% 3% 0;
 }
 
+/* Tabela de Produtos */
 .tabela-usuario {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .tabela-usuario th,
 .tabela-usuario td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: left;
 }
 
@@ -219,11 +184,149 @@
     background-color: #f2f2f2;
 }
 
-
-.sideBar{
+/* Sidebar */
+.sideBar {
     height: 0;
 }
 
-.sideBar .open{
+.sideBar .open {
     height: 30vh;
+}
+
+
+.buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.tabela-usuario .acao-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+}
+
+.tabela-usuario .acao-buttons button {
+    margin: 0 8px;
+    padding: 8px 16px;
+    background-color: #F3B44C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.acao-buttons button:hover {
+    background-color: #FF8C00;
+}
+
+.acao-buttons button.editar {
+    background-color: #F3B44C;
+}
+
+.acao-buttons button.movimentacao {
+    background-color: #57de79;
+}
+
+/* Modal */
+.modalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContainer {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modalContainer h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .modalContainer input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .modalButtons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .modalButtons button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .modalButtons button:hover {
+    background-color: #f3b44c;
+    color: #fff;
+  }
+
+  /* Botão Exportar Relatório */
+.exportarRelatorio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F3B44C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.exportarRelatorio img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.exportarRelatorio:hover {
+    background-color: #FF8C00;
+}
+
+/* Botões Salvar, Desfazer, Refazer */
+.acoes-salvar {
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.acoes-salvar button {
+    background-color: #F3B44C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.acoes-salvar button:hover {
+    background-color: #FF8C00;
 }

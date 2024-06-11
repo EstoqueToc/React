@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styles from './CadastroProduto.module.css'; // Crie um arquivo CSS correspondente para estilizar seu formulário
+import { useNavigate } from 'react-router-dom';
+import styles from './CadastroProduto.module.css';
 import SideBar from '../../../Componentes/NavBarLateral/NavBarLateral';
 import { toast } from "react-toastify";
 import api from '../../../api'; // Supondo que você tenha configurado um arquivo de API
 
 function CadastroProduto() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nomeProduto: '',
         descricaoProduto: '',
@@ -21,6 +23,8 @@ function CadastroProduto() {
     const [error, setError] = useState(null);
     const [categorias, setCategorias] = useState([]);
     const [fornecedores, setFornecedores] = useState([]);
+    const [showCategoriaModal, setShowCategoriaModal] = useState(false);
+    const [newCategoria, setNewCategoria] = useState('');
 
     useEffect(() => {
         fetchData();
@@ -93,19 +97,51 @@ function CadastroProduto() {
         }
     };
 
-    // Renderização condicional enquanto os dados estão sendo carregados
-    if (categorias.length === 0 || fornecedores.length === 0) {
-        return <p>Carregando...</p>;
-    }
+    const handleCategoriaChange = (e) => {
+        if (e.target.value === 'nova_categoria') {
+            setShowCategoriaModal(true);
+        } else {
+            setFormData({
+                ...formData,
+                categoria: e.target.value
+            });
+        }
+    };
+
+    const handleFornecedorChange = (e) => {
+        if (e.target.value === 'novo_fornecedor') {
+            navigate('/CadastroFornecedor');
+        } else {
+            setFormData({
+                ...formData,
+                fornecedor: e.target.value
+            });
+        }
+    };
+
+    const handleAddCategoria = async () => {
+        try {
+            const empresaId = sessionStorage.getItem('ID_EMPRESA');
+            const response = await api.post('/categorias', { nome: newCategoria, empresa: {
+                id: empresaId
+            }});
+            toast.success(`Categoria ${response.data.nome} adicionada com sucesso`);
+            setCategorias([...categorias, response.data]);
+            setNewCategoria('');
+            setShowCategoriaModal(false);
+            setError('');
+        } catch (error) {
+            toast.error('Erro ao adicionar categoria', error);
+            setError('Erro ao adicionar categoria');
+        }
+    };
 
     return (
         <>
             <SideBar />
 
             <div className={styles.main}>
-
                 <div className={styles.container}>
-
                     <h1>Cadastro de Produto</h1>
 
                     <div className={styles.lado_lado}>
@@ -168,7 +204,7 @@ function CadastroProduto() {
                             </div>
 
                             <div className={styles.field}>
-                                <label>Preço de Venda do Produto</label>
+                                <label>Preço de Venda do Produto:</label>
                                 <input
                                     type="text"
                                     name="precoVendaProduto"
@@ -194,10 +230,11 @@ function CadastroProduto() {
                                 <select
                                     name="categoria"
                                     value={formData.categoria}
-                                    onChange={handleInputChange}
+                                    onChange={handleCategoriaChange}
                                     required
                                 >
                                     <option value="">Selecione uma categoria</option>
+                                    <option value="nova_categoria">Cadastrar nova categoria + </option>
                                     {categorias.map((categoria) => (
                                         <option key={categoria.id} value={categoria.id}>
                                             {categoria.nome}
@@ -211,10 +248,11 @@ function CadastroProduto() {
                                 <select
                                     name="fornecedor"
                                     value={formData.fornecedor}
-                                    onChange={handleInputChange}
+                                    onChange={handleFornecedorChange}
                                     required
                                 >
                                     <option value="">Selecione um fornecedor</option>
+                                    <option value="novo_fornecedor">Cadastrar novo fornecedor + </option>
                                     {fornecedores.map((fornecedor) => (
                                         <option key={fornecedor.id} value={fornecedor.id}>
                                             {fornecedor.nomeFantasia}
@@ -234,6 +272,22 @@ function CadastroProduto() {
                     </div>
                 </div>
             </div>
+
+            {showCategoriaModal && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h2>Cadastrar Nova Categoria</h2>
+                        <label>Nome da Categoria:</label>
+                        <input
+                            type="text"
+                            value={newCategoria}
+                            onChange={(e) => setNewCategoria(e.target.value)}
+                        />
+                        <button onClick={handleAddCategoria}>Adicionar</button>
+                        <button onClick={() => setShowCategoriaModal(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

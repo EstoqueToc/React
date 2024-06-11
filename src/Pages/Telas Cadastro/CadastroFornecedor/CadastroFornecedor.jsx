@@ -72,18 +72,6 @@ function CadastroFornecedor() {
             <div className={styles.main}>
                 <div className={styles.container}>
                     <h1>Cadastro de Fornecedor</h1>
-                    <form className={styles.form_isolada} onSubmit={handleSubmit}>
-                        <div className={styles.field}>
-                            <label>Razão Social:</label>
-                            <input
-                                type="text"
-                                name="razaoSocial"
-                                value={formData.razaoSocial}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                    </form>
 
                     <div className={styles.lado_lado}>
                         <form className={styles.form} onSubmit={handleSubmit}>

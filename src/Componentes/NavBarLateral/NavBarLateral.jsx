@@ -24,6 +24,11 @@ const Menu = () => {
         }
     };
 
+    const toggleSair = () => {
+        sessionStorage.clear();
+        window.location.href = '/';
+    }
+
     return (
 
         <>
@@ -84,7 +89,7 @@ const Menu = () => {
                                 <li>
                                     <a href="estoque.html">
                                         <FontAwesomeIcon icon={faCube} size="sm" />
-                                        <Link to={"/CadastroProduto"} className={styles['nav-text']}>Meu Estoque</Link>
+                                        <Link to={"/CadastroProduto"} className={styles['nav-text']}>Cadastrar Produtos</Link>
                                     </a>
                                 </li>
                                
@@ -111,7 +116,7 @@ const Menu = () => {
                             </a>
                         </li>
                         <li  className={styles['item-menu']}>
-                            <a href="#">
+                            <a href="#" onClick={() => toggleSair()}>
                                 <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
                                 <Link to={"/"} className={styles['nav-text']}>Sair</Link>
                             </a>
