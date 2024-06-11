@@ -32,6 +32,7 @@ function Produtos() {
         params: { empresaId },
       });
       setProdutos(response.data);
+      await api.get(`/estoque/total`)
     } catch (error) {
       console.error('Erro:', error);
     }
@@ -331,7 +332,7 @@ function Produtos() {
                 <th>Preço Unitário</th>
                 <th>Status Estoque</th>
                 <th>Movitação</th>
-                {acesso === 1 && <th>Ações</th>}
+                {acesso === '1' && <th>Ações</th>}
               </tr>
             </thead>
             <tbody id='products-table'>
