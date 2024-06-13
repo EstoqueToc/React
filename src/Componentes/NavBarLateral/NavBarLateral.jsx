@@ -4,7 +4,7 @@ import userImage from '../../Assets/usuario.png'
 import styles from './teste.module.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUser,faUsers, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faChartLine, faFile, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser,faUsers, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Menu = () => {
     const [submenuFuncionario, setSubmenuFuncionario] = useState(false);

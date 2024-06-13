@@ -24,6 +24,7 @@ function Produtos() {
 
   useEffect(() => {
     fetchInformacoesEstoque();
+    // eslint-disable-next-line
   }, []);
 
   const fetchInformacoesEstoque = async () => {

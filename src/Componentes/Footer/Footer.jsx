@@ -5,7 +5,7 @@ import { BsGithub } from "react-icons/bs";
 import { BsTwitterX } from "react-icons/bs";
 import { BsInstagram } from "react-icons/bs";
 
-
+// eslint-disable-next-line
 function Footer() {
     return (
         <>
