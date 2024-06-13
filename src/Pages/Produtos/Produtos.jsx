@@ -23,6 +23,7 @@ function Produtos() {
   const acesso = sessionStorage.getItem('ACESSO');
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchInformacoesEstoque();
     // eslint-disable-next-line
   }, []);

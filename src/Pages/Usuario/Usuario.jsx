@@ -18,6 +18,7 @@ function Usuario() {
     useEffect(() => {
         setAcesso(parseInt(sessionStorage.getItem("ACESSO"), 10));
         listarUsuarios();
+        // eslint-disable-next-line
     }, []);
 
     const listarUsuarios = () => {

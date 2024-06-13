@@ -1,9 +1,6 @@
 import styles from './Footer.module.css';
 import React from 'react';
-import { BsFacebook } from "react-icons/bs";
 import { BsGithub } from "react-icons/bs";
-import { BsTwitterX } from "react-icons/bs";
-import { BsInstagram } from "react-icons/bs";
 
 // eslint-disable-next-line
 function Footer() {
@@ -38,10 +35,7 @@ function Footer() {
                     <div className={styles["acompanhe"]}>
                         <h2>Acompanhe nossa redes sociais:</h2>
                         <div className="social-icons">
-                            <a href="#"><BsFacebook></BsFacebook></a>
-                            <a href="#"><BsTwitterX></BsTwitterX></a>
-                            <a href="#"><BsInstagram></BsInstagram></a>
-                            <a href="#"><BsGithub></BsGithub></a>
+                            <a href="https://github.com/EstoqueToc"><BsGithub></BsGithub></a>
                         </div>
                     </div>
                 </div>

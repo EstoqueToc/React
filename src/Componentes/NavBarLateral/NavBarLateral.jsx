@@ -4,7 +4,7 @@ import userImage from '../../Assets/usuario.png'
 import styles from './teste.module.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUser,faUsers, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser, faUsers, faAngleDown, faUserPlus, faBoxes, faCube, faTruck, faEnvelope, faQuestionCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Menu = () => {
     const [submenuFuncionario, setSubmenuFuncionario] = useState(false);
@@ -30,7 +30,6 @@ const Menu = () => {
     }
 
     return (
-
         <>
             <div>
                 <div className={styles['superior']}>
@@ -48,78 +47,74 @@ const Menu = () => {
                 <div className={styles.scrollbar} id="style-1">
                     <ul>
                         <li className={styles['item-menu']}>
-                            <a href="./inicial.html">
+                            <Link to="/DashBoard" className={styles['nav-link']}>
                                 <FontAwesomeIcon icon={faHome} size="lg" />
-                                <Link to={"/DashBoard"} className={styles['nav-text']}>Página Inicial</Link>
-                            </a>
+                                <span className={styles['nav-text']}>Página Inicial</span>
+                            </Link>
                         </li>
-                        <li  className={styles['item-menu']}>
-                            <a href="#" onClick={() => toggleSubmenu('funcionario')}>
+                        <li className={styles['item-menu']}>
+                            <div onClick={() => toggleSubmenu('funcionario')} className={styles['nav-link']}>
                                 <FontAwesomeIcon icon={faUser} size="lg" />
                                 <span className={styles['nav-text']}>Funcionário <FontAwesomeIcon icon={faAngleDown} /></span>
-                            </a>
+                            </div>
                             <ul id="submenu-funcionario" style={{ display: submenuFuncionario ? 'block' : 'none' }}>
                                 <li>
-                                    <a href="cadastroUsuario.html">
+                                    <Link to="/usuarios" className={styles['nav-link']}>
                                         <FontAwesomeIcon icon={faUsers} size="sm" id="iconeCadastrar" />
-                                        <Link to={"/usuarios"} className={styles['nav-text']}> Funcionarios</Link>
-                                    </a>
+                                        <span className={styles['nav-text']}>Funcionarios</span>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="cadastroUsuario.html">
+                                    <Link to="/CadastroFunc" className={styles['nav-link']}>
                                         <FontAwesomeIcon icon={faUserPlus} size="sm" id="iconeCadastrar" />
-                                        <Link to={"/CadastroFunc"} className={styles['nav-text']}>Cadastrar Funcionario</Link>
-                                    </a>
+                                        <span className={styles['nav-text']}>Cadastrar Funcionario</span>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
-                        <li  className={styles['item-menu']}>
-                            <a href="#" onClick={() => toggleSubmenu('estoque')}>
+                        <li className={styles['item-menu']}>
+                            <div onClick={() => toggleSubmenu('estoque')} className={styles['nav-link']}>
                                 <FontAwesomeIcon icon={faBoxes} size="lg" />
                                 <span className={styles['nav-text']}>Estoque <FontAwesomeIcon icon={faAngleDown} /></span>
-                            </a>
+                            </div>
                             <ul id="submenu-estoque" style={{ display: submenuEstoque ? 'block' : 'none' }}>
-
                                 <li>
-                                    <a href="estoque.html">
+                                    <Link to="/Produtos" className={styles['nav-link']}>
                                         <FontAwesomeIcon icon={faCube} size="sm" />
-                                        <Link to={"/Produtos"} className={styles['nav-text']}>Meu Estoque</Link>
-                                    </a>
+                                        <span className={styles['nav-text']}>Meu Estoque</span>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="estoque.html">
+                                    <Link to="/CadastroProduto" className={styles['nav-link']}>
                                         <FontAwesomeIcon icon={faCube} size="sm" />
-                                        <Link to={"/CadastroProduto"} className={styles['nav-text']}>Cadastrar Produtos</Link>
-                                    </a>
+                                        <span className={styles['nav-text']}>Cadastrar Produtos</span>
+                                    </Link>
                                 </li>
-                               
                                 <li>
-                                    <a href="cadastroFornecedor.html">
+                                    <Link to="/CadastroFornecedor" className={styles['nav-link']}>
                                         <FontAwesomeIcon icon={faTruck} size="sm" />
-                                        <Link to={"/CadastroFornecedor"} className={styles['nav-text']}>Cadastrar Fornecedor</Link>
-                                    </a>
+                                        <span className={styles['nav-text']}>Cadastrar Fornecedor</span>
+                                    </Link>
                                 </li>
-                                
                             </ul>
                         </li>
-                    
-                        <li  className={styles['item-menu']}>
-                            <a href="#">
+                        <li className={styles['item-menu']}>
+                            <Link to="/Contato" className={styles['nav-link']}>
                                 <FontAwesomeIcon icon={faEnvelope} size="lg" />
-                                <Link to={"/"} className={styles['nav-text']}>Contato</Link>
-                            </a>
+                                <span className={styles['nav-text']}>Contato</span>
+                            </Link>
                         </li>
-                        <li  className={styles['item-menu']}>
-                            <a href="#">
+                        <li className={styles['item-menu']}>
+                            <Link to="/Ajuda" className={styles['nav-link']}>
                                 <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
-                                <Link to={"/"} className={styles['nav-text']}>Ajuda</Link>
-                            </a>
+                                <span className={styles['nav-text']}>Ajuda</span>
+                            </Link>
                         </li>
-                        <li  className={styles['item-menu']}>
-                            <a href="#" onClick={() => toggleSair()}>
+                        <li className={styles['item-menu']}>
+                            <div onClick={toggleSair} className={styles['nav-link']}>
                                 <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
-                                <Link to={"/"} className={styles['nav-text']}>Sair</Link>
-                            </a>
+                                <span className={styles['nav-text']}>Sair</span>
+                            </div>
                         </li>
                     </ul>
                 </div>

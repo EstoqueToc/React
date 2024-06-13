@@ -10,8 +10,6 @@ import DashBoard from './Pages/DashBoard/index'
 import CadastroFunc from './Pages/Telas Cadastro/CadastroFunc/CadastroFuncionario';
 import CadastroProduto from './Pages/Telas Cadastro/CadastroProduto/CadastroProduto'
 import CadastroFornecedor from './Pages/Telas Cadastro/CadastroFornecedor/CadastroFornecedor'
-import AttProduto from './Pages/Telas Cadastro/Atualização Produto/attProduto'
-
 
 
 import Sidebar from './Componentes/NavBarLateral/NavBarLateral';
@@ -39,8 +37,6 @@ function Router() {
         <Route path={"/CadastroFunc"} element={<CadastroFunc />}/>
         <Route path={"/CadastroProduto"} element={<CadastroProduto />}/>
         <Route path={"/CadastroFornecedor"} element={<CadastroFornecedor />}/>
-        <Route path={"/AtualizaProduto"} element={<AttProduto />}/>
-        
 
         {"Pagina de Not Found, para caso o cliente acesse alguma URL errada"}            
 				<Route path={"*"} element={<NotFound />} />   
